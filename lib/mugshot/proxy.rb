@@ -17,6 +17,10 @@ class Mugshot::Proxy < Sinatra::Base
     res.body
   end
 
+  before do
+    halt 405 unless request.get?
+  end
+
   protected
 
   def initialize(host)

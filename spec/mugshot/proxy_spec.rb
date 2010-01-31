@@ -34,4 +34,17 @@ describe Mugshot::Proxy do
       last_response.headers['cache-control'].should == 'public, max-age=31557600'
     end
   end
+
+  describe 'other methods' do
+    it 'should not be allowed' do
+      post '/request/path'
+      last_response.status.should == 405
+
+      put '/request/path'
+      last_response.status.should == 405
+
+      delete '/request/path'
+      last_response.status.should == 405
+    end
+  end
 end
