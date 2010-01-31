@@ -1,4 +1,5 @@
 require 'sinatra/base'
+
 class Mugshot::Application < Sinatra::Base
 
   set :static, true

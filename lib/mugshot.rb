@@ -11,4 +11,4 @@ require 'mugshot/image'
 require 'mugshot/storage'
 require 'mugshot/fs_storage'
 require 'mugshot/application'
-
+require 'mugshot/proxy'
