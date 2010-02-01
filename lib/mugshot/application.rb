@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'sinatra/base'
 
 class Mugshot::Application < Sinatra::Base
@@ -7,9 +8,9 @@ class Mugshot::Application < Sinatra::Base
 
   before do
     response['Cache-Control'] = "public, max-age=#{1.year.to_i}"
-    content_type :jpg    
+    content_type :jpg
   end
-  
+
   get '/?' do
     content_type :html
     'ok'
@@ -36,7 +37,7 @@ class Mugshot::Application < Sinatra::Base
   def initialize(storage)
     @storage = storage
   end
-  
+
   def resize(image, size)
     image.resize!(size)
   end

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'mugshot'
 
 require 'rack/test'
@@ -23,9 +24,9 @@ Spec::Matchers.define :be_same_image_as do |expected_filename|
   match do |actual_blob|
     actual = Magick::Image.from_blob(actual_blob).first
     expected = Magick::Image.read(File.expand_path(__FILE__ + "/../files/#{expected_filename}")).first
-    
-    actual.columns == expected.columns && 
-    actual.rows == expected.rows && 
+
+    actual.columns == expected.columns &&
+    actual.rows == expected.rows &&
     actual.difference(expected)[1] < 0.01
   end
 end
