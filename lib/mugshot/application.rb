@@ -7,38 +7,51 @@ class Mugshot::Application < Sinatra::Base
 
   before do
     response['Cache-Control'] = "public, max-age=#{1.year.to_i}"
-    content_type :jpg    
   end
   
   get '/?' do
-    content_type :html
     'ok'
   end
 
   post '/?' do
-    content_type :html
     @storage.write(params['file'][:tempfile].read)
   end
 
+  get '/:size/*/:id.:format' do |size, splat, id, format|
+    process_image(size, id, format, splat)
+  end
+
   get '/:size/:id.:format' do |size, id, format|
+    process_image(size, id, format)
+  end
+
+  protected
+
+  def initialize(storage)
+    @storage = storage
+  end
+
+  private
+
+  def process_image(size, id, format, splat = nil)
     image = @storage.read(id)
     halt 404 if image.blank?
 
     begin
-      resize(image, size)
+      image.resize!(size)
+      process_operations(image, splat) unless splat.nil?
       send_image(image, format.to_sym)
     ensure
       image.destroy!
     end
   end
 
-  protected
-  def initialize(storage)
-    @storage = storage
-  end
-  
-  def resize(image, size)
-    image.resize!(size)
+  def process_operations(image, splat)
+    operations = Hash[*splat.split('/')]
+    operations.assert_valid_keys('crop') rescue halt 404
+    operations.each do |op, op_params|
+      image.send("#{op}!", op_params)
+    end
   end
 
   def send_image(image, format)
