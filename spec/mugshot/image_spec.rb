@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mugshot::Image do
@@ -7,7 +8,7 @@ describe Mugshot::Image do
 
     @image = Mugshot::Image.new(File.open("spec/files/test.jpg"))
   end
-  
+
   it 'should return image width and height' do
     @magick_image.stub!(:columns).and_return(100)
     @magick_image.stub!(:rows).and_return(200)
@@ -56,7 +57,7 @@ describe Mugshot::Image do
     end
 
   end
-  
+
   it "should resize image to given width and height" do
     @magick_image.should_receive(:resize!).with(300, 200)
     @image.resize! "300x200"
@@ -71,10 +72,10 @@ describe Mugshot::Image do
     @magick_image.should_receive(:resize_to_fit!).with(nil, 200)
     @image.resize! "x200"
   end
-  
+
   it 'should destroy image' do
     @magick_image.should_receive(:'destroy!')
     @image.destroy!
   end
-  
+
 end

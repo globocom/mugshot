@@ -1,6 +1,6 @@
-
+# -*- encoding: utf-8 -*-
 class Mugshot::Image
-  
+
   def width
     @image.columns
   end
@@ -11,7 +11,7 @@ class Mugshot::Image
 
   def resize!(size)
     w, h = size.to_s.split("x").map{|i| i.blank? ? nil : i.to_i}
-    
+
     if [w, h].include?(nil)
       @image.resize_to_fit! w, h
     else

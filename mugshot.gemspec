@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-01-29}
+  s.date = %q{2010-02-01}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "lib/mugshot/application.rb",
      "lib/mugshot/fs_storage.rb",
      "lib/mugshot/image.rb",
+     "lib/mugshot/proxy.rb",
      "lib/mugshot/public/crossdomain.xml",
      "lib/mugshot/storage.rb"
   ]
@@ -36,6 +37,7 @@ Gem::Specification.new do |s|
      "spec/mugshot/application_spec.rb",
      "spec/mugshot/fs_storage_spec.rb",
      "spec/mugshot/image_spec.rb",
+     "spec/mugshot/proxy_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/test.html",

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'sinatra/base'
 
 class Mugshot::Application < Sinatra::Base
@@ -8,7 +9,7 @@ class Mugshot::Application < Sinatra::Base
   before do
     response['Cache-Control'] = "public, max-age=#{1.year.to_i}"
   end
-  
+
   get '/?' do
     'ok'
   end
