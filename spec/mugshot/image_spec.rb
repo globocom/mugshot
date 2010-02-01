@@ -73,6 +73,11 @@ describe Mugshot::Image do
     @image.resize! "x200"
   end
 
+  it "should crop imate to given width and height" do
+    @magick_image.should_receive(:crop!).with(Magick::CenterGravity, 140, 105)
+    @image.crop! "140x105"
+  end
+
   it 'should destroy image' do
     @magick_image.should_receive(:'destroy!')
     @image.destroy!

@@ -10,7 +10,7 @@ class Mugshot::Image
   end
 
   def resize!(size)
-    w, h = size.to_s.split("x").map{|i| i.blank? ? nil : i.to_i}
+    w, h = parse_size(size)
 
     if [w, h].include?(nil)
       @image.resize_to_fit! w, h
@@ -18,6 +18,12 @@ class Mugshot::Image
       @image.resize! w, h
     end
 
+    self
+  end
+
+  def crop!(size)
+    w, h = parse_size(size)
+    @image.crop! Magick::CenterGravity,  w, h
     self
   end
 
@@ -40,4 +46,9 @@ class Mugshot::Image
     @image = Magick::Image.read(file).first
   end
 
+  private
+
+  def parse_size(size)
+    size.to_s.split("x").map{|i| i.blank? ? nil : i.to_i}
+  end
 end

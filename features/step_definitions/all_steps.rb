@@ -14,8 +14,8 @@ When /^I ask for a (.*) resized image that doesn't exist$/ do |size|
 end
 
 When /^I ask for the (.*) image cropped to (.*)$/ do |size, crop|
-  pending
   get "/#{size}/crop/#{crop}/#{@image_id}.jpg"
+  @retrieved_image = last_response.body
 end
 
 Then /^I should get a (\d+) response$/ do |response_code|
