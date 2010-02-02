@@ -18,12 +18,29 @@ class Mugshot::Application < Sinatra::Base
     @storage.write(params['file'][:tempfile].read)
   end
 
-  get '/:size/*/:id.:format' do |size, splat, id, format|
-    process_image(size, id, format, splat)
+  get '/:size/:id.:format' do |size, id, format|
+    image = @storage.read(id)
+    halt 404 if image.blank?
+
+    image.resize!(size)
+
+    begin
+      send_image(image, format.to_sym)
+    ensure
+      image.destroy!
+    end
   end
 
-  get '/:size/:id.:format' do |size, id, format|
-    process_image(size, id, format)
+  get '/*/:id.:format' do |splat, id, format|
+    image = @storage.read(id)
+    halt 404 if image.blank?
+
+    begin
+      process_operations(image, splat)
+      send_image(image, format.to_sym)
+    ensure
+      image.destroy!
+    end
   end
 
   protected
@@ -33,19 +50,6 @@ class Mugshot::Application < Sinatra::Base
   end
 
   private
-
-  def process_image(size, id, format, splat = nil)
-    image = @storage.read(id)
-    halt 404 if image.blank?
-
-    begin
-      image.resize!(size)
-      process_operations(image, splat) unless splat.nil?
-      send_image(image, format.to_sym)
-    ensure
-      image.destroy!
-    end
-  end
 
   def process_operations(image, splat)
     operations = Hash[*splat.split('/')]
