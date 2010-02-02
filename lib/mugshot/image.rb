@@ -23,7 +23,7 @@ class Mugshot::Image
 
   def crop!(size)
     w, h = parse_size(size)
-    @image.crop! Magick::CenterGravity,  w, h
+    @image.resize_to_fill! w, h
     self
   end
 
