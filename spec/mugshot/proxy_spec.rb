@@ -35,6 +35,14 @@ describe Mugshot::Proxy do
       last_response.headers['cache-control'].should == 'public, max-age=31557600'
     end
 
+    it 'should return original status' do
+      @res.stub!(:code).and_return('404')
+
+      get '/request/path'
+
+      last_response.status.should == 404
+    end
+
     it 'should not return status header' do
       @res.stub!(:each_header).and_yield('status', '200')
 

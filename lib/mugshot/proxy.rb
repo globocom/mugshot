@@ -9,6 +9,8 @@ class Mugshot::Proxy < Sinatra::Base
       http.get(url.path)
     }
 
+    status res.code.to_i
+
     headers_hash = {}
     res.each_header do |k,v|
       headers_hash[k] = v unless k.to_s =~ /status/i
