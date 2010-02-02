@@ -88,9 +88,10 @@ describe Mugshot::Application do
     it_should_behave_like 'any GET image'
 
     it "should perform operations on image" do
+      @image.should_receive(:resize!).with("140x140")
       @image.should_receive(:crop!).with("140x105")
 
-      perform_get
+      get "/resize/140x140/crop/140x105/image_id.jpg"
     end
 
     it "should halt 404 on operations that are not allowed" do

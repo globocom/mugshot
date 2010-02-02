@@ -53,7 +53,7 @@ class Mugshot::Application < Sinatra::Base
 
   def process_operations(image, splat)
     operations = Hash[*splat.split('/')]
-    operations.assert_valid_keys('crop') rescue halt 404
+    operations.assert_valid_keys('crop', 'resize') rescue halt 404
     operations.each do |op, op_params|
       image.send("#{op}!", op_params)
     end

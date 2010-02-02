@@ -5,12 +5,12 @@ When /^I upload an image$/ do
 end
 
 When /^I ask for the (.*) resized image$/ do |size|
-  get "/#{size}/#{@image_id}.jpg"
+  get "/resize/#{size}/#{@image_id}.jpg"
   @retrieved_image = last_response.body
 end
 
 When /^I ask for a (.*) resized image that doesn't exist$/ do |size|
-  get "/#{size}/nonexistant.jpg"
+  get "/resize/#{size}/nonexistant.jpg"
 end
 
 When /^I ask for the (.*) cropped image$/ do |size|
