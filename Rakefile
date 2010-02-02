@@ -7,7 +7,7 @@ task :default => [:spec, :features]
 begin
   require 'jeweler'
   namespace :gem do
-    Jeweler::Tasks.new do |gem|
+    @jeweler_tasks = Jeweler::Tasks.new do |gem|
       gem.name = "mugshot"
       gem.summary = %Q{Dead simple image server}
       gem.description = %Q{Dead simple image server}
