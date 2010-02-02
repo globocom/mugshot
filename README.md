@@ -25,7 +25,7 @@ For production use, don't even think about using Mugshot without something like
 Varnish or Squid sitting in front.
 
 
-Supported Operations
+Supported operations
 --------------------
 
 ### Resize
