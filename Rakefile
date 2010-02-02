@@ -28,6 +28,18 @@ begin
 
       # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
     end
+
+    desc 'Install runtime and development dependencies'
+    task :install_dependencies do
+      @jeweler_tasks.jeweler.gemspec.dependencies.each do |dependency|
+        begin
+          Gem.activate dependency.name, dependency.version_requirements.to_s
+        rescue LoadError
+          system %Q{gem install #{dependency.name} --version "#{dependency.version_requirements}"}
+        end
+      end
+    end
+
     Jeweler::GemcutterTasks.new
   end
 rescue LoadError
@@ -59,4 +71,3 @@ rescue LoadError
     abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
   end
 end
-
