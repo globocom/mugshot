@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mugshot}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-02-01}
+  s.date = %q{2010-02-03}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/test.html",
+     "features/crop_image.feature",
      "features/retrieve_resized_image.feature",
      "features/retrieve_resized_image_keeping_aspect_ratio.feature",
      "features/step_definitions",
@@ -50,6 +51,7 @@ Gem::Specification.new do |s|
      "features/support/files",
      "features/support/files/test.200x.jpg",
      "features/support/files/test.200x200.jpg",
+     "features/support/files/test.crop.300x200.jpg",
      "features/support/files/test.jpg",
      "features/support/files/test.x200.jpg"
   ]
