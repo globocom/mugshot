@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mugshot}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-02-03}
+  s.date = %q{2010-02-04}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -31,29 +31,29 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Dead simple image server}
   s.test_files = [
-    "spec/files",
-     "spec/files/test.jpg",
+    "spec/test.html",
      "spec/mugshot",
-     "spec/mugshot/application_spec.rb",
      "spec/mugshot/fs_storage_spec.rb",
-     "spec/mugshot/image_spec.rb",
      "spec/mugshot/proxy_spec.rb",
-     "spec/spec.opts",
+     "spec/mugshot/image_spec.rb",
+     "spec/mugshot/application_spec.rb",
      "spec/spec_helper.rb",
-     "spec/test.html",
-     "features/crop_image.feature",
+     "spec/files",
+     "spec/files/test.jpg",
+     "spec/spec.opts",
      "features/retrieve_resized_image.feature",
+     "features/crop_image.feature",
      "features/retrieve_resized_image_keeping_aspect_ratio.feature",
-     "features/step_definitions",
-     "features/step_definitions/all_steps.rb",
      "features/support",
      "features/support/env.rb",
      "features/support/files",
-     "features/support/files/test.200x.jpg",
      "features/support/files/test.200x200.jpg",
      "features/support/files/test.crop.300x200.jpg",
+     "features/support/files/test.x200.jpg",
      "features/support/files/test.jpg",
-     "features/support/files/test.x200.jpg"
+     "features/support/files/test.200x.jpg",
+     "features/step_definitions",
+     "features/step_definitions/all_steps.rb"
   ]
 
   if s.respond_to? :specification_version then
