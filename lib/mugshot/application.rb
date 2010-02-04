@@ -62,6 +62,6 @@ class Mugshot::Application < Sinatra::Base
   def send_image(image, format)
     content_type format
     response['Content-Disposition'] = 'inline'
-    image.to_blob(:format => format)
+    image.to_blob
   end
 end

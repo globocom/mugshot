@@ -35,12 +35,6 @@ describe Mugshot::Application do
        @storage.stub!(:read).with("image_id").and_return(@image)
     end
 
-    it "should convert image to format" do
-      @image.should_receive(:to_blob).with(:format => :jpg)
-      perform_get
-      last_response.content_type == "image/jpg"
-    end
-
     it "should destroy image" do
       @image.should_receive(:destroy!)
 
