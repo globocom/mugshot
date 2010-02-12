@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'fileutils'
 class Mugshot::FSStorage < Mugshot::Storage
   def write(bin)
     returning asset_id do |id|

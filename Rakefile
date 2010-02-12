@@ -17,7 +17,7 @@ begin
       gem.files = FileList["lib/**/*"] + %w{gems.yml gems_dev.yml}
       gem.test_files = FileList["spec/**/*"] + FileList["features/**/*"]
 
-      gem.add_dependency "activesupport"
+      gem.add_dependency "activesupport", ">= 2.3.0"
       gem.add_dependency "sinatra", ">= 0.9.4"
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"

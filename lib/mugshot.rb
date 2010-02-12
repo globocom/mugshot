@@ -1,15 +1,10 @@
 # -*- encoding: utf-8 -*-
-require 'rubygems'
-require 'fileutils'
-require 'uuid'
-require 'active_support'
-require 'RMagick'
+require "active_support"
 
 module Mugshot
+  autoload :Image, "mugshot/image"
+  autoload :Storage, "mugshot/storage"
+  autoload :FSStorage, "mugshot/fs_storage"
+  autoload :Application, "mugshot/application"
+  autoload :Proxy, "mugshot/proxy"
 end
-
-require 'mugshot/image'
-require 'mugshot/storage'
-require 'mugshot/fs_storage'
-require 'mugshot/application'
-require 'mugshot/proxy'

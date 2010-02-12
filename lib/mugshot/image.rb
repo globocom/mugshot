@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
+require 'RMagick'
 class Mugshot::Image
-
   def width
     @image.columns
   end
