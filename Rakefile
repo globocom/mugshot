@@ -22,7 +22,7 @@ begin
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"
 
-      # gem.add_development_dependency "rspec", ">= 2.0.0.a8"
+      gem.add_development_dependency "rspec", ">= 2.0.0.a8"
       gem.add_development_dependency "cucumber", ">= 0.6.2"
       gem.add_development_dependency "rack-test", ">= 0.5.1"
 
