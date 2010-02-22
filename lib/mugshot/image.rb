@@ -27,23 +27,29 @@ class Mugshot::Image
     self
   end
 
+  def quality!(quality)
+    @quality = quality.to_i
+    self
+  end
+
   def destroy!
     @image.destroy!
     self
   end
 
   def to_blob(opts = {})
+    opts.merge!(:quality => @quality)
     @image.strip!
     @image.to_blob do
-      self.format = opts[:format].to_s if opts[:format].present?
+      self.format = opts[:format].to_s if opts.include?(:format)
       self.quality = opts[:quality] if opts[:quality].present?
     end
   end
 
   protected
-
   def initialize(file)
     @image = Magick::Image.read(file).first
+    @quality = nil
   end
 
   private

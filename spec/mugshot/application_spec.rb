@@ -84,13 +84,13 @@ describe Mugshot::Application do
     it "should perform operations on image" do
       @image.should_receive(:resize!).with("140x140")
       @image.should_receive(:crop!).with("140x105")
+      @image.should_receive(:quality!).with("70")
 
-      get "/resize/140x140/crop/140x105/image_id.jpg"
+      get "/resize/140x140/crop/140x105/quality/70/image_id.jpg"
     end
 
     it "should halt 404 on operations that are not allowed" do
       @image.should_not_receive(:operation!)
-
       get "/operation/140x105/image_id.jpg"
     end
   end

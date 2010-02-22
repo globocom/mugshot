@@ -2,11 +2,12 @@
 require 'mugshot'
 
 require 'rack/test'
-require 'spec/expectations'
+require 'rspec/expectations'
 
 require 'pp'
 
 module CucumberWorld
+  include Rspec::Matchers
   include Rack::Test::Methods
 
   def app
@@ -20,7 +21,7 @@ After do
   FileUtils.rm_rf("/tmp/mugshot/cucumber")
 end
 
-Spec::Matchers.define :be_same_image_as do |expected_filename|
+Rspec::Matchers.define :be_same_image_as do |expected_filename|
   match do |actual_blob|
     actual = Magick::Image.from_blob(actual_blob).first
     expected = Magick::Image.read(File.expand_path(__FILE__ + "/../files/#{expected_filename}")).first
@@ -30,3 +31,20 @@ Spec::Matchers.define :be_same_image_as do |expected_filename|
     actual.difference(expected)[1] < 0.01
   end
 end
+
+Rspec::Matchers.define :have_compression_of do |compression|
+  match do |actual_blob|
+    actual = Magick::Image.from_blob(actual_blob).first
+    actual.quality.to_s == compression.to_s
+  end
+
+  failure_message_for_should do |actual_blob|
+    actual = Magick::Image.from_blob(actual_blob).first
+    "expected #{actual.quality}% but got #{compression}%"
+  end
+  
+  failure_message_for_should_not do |actual|
+    "expected #{actual.quality}% not to be #{compression}%"
+  end  
+end
+

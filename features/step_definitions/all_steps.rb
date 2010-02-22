@@ -33,3 +33,12 @@ end
 Then /^I should get the (.*) cropped image$/ do |size|
   @retrieved_image.should be_same_image_as("test.crop.#{size}.jpg")
 end
+
+When /^I ask for an image with (\d*)% of compression$/ do |compression|
+  get "/quality/#{compression}/#{@image_id}.jpg"
+  @retrieved_image = last_response.body
+end
+
+Then /^I should get a image with (\d*)% of compression$/ do |compression|
+  @retrieved_image.should have_compression_of(compression)
+end

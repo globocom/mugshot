@@ -22,7 +22,7 @@ begin
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"
 
-      gem.add_development_dependency "rspec", ">= 1.3.0"
+      # gem.add_development_dependency "rspec", ">= 2.0.0.a8"
       gem.add_development_dependency "cucumber", ">= 0.6.2"
       gem.add_development_dependency "rack-test", ">= 0.5.1"
 
@@ -47,15 +47,15 @@ rescue LoadError
 end
 
 begin
-  require 'spec/rake/spectask'
-  Spec::Rake::SpecTask.new(:spec) do |spec|
-    spec.libs << 'lib' << 'spec'
-    spec.pattern = 'spec/**/*_spec.rb'
-    spec.rcov = true
-    spec.rcov_dir = 'doc/coverage'
-    spec.rcov_opts = %w{--text-summary --failure-threshold 100 --exclude spec/*,gems/*,/usr/lib/ruby/*}
+  require 'rspec/core/rake_task'
+  desc "Run all examples using rcov"
+  Rspec::Core::RakeTask.new :spec do |t|
+    t.rcov = true
+    t.rcov_opts =  %[--output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
+    # t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
   end
   task :spec => 'gem:check_dependencies'
+  task :default => :spec
 rescue LoadError
   task :spec do
     abort "Rspec is not available. In order to run features, you must: sudo gem install rspec"

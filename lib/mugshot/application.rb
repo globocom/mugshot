@@ -2,7 +2,6 @@
 require 'sinatra/base'
 
 class Mugshot::Application < Sinatra::Base
-
   set :static, true
   set :public, ::File.expand_path(::File.join(::File.dirname(__FILE__), "public"))
 
@@ -18,6 +17,8 @@ class Mugshot::Application < Sinatra::Base
     @storage.write(params['file'][:tempfile].read)
   end
 
+  ##
+  # @deprecated
   get '/:size/:id.:format' do |size, id, format|
     image = @storage.read(id)
     halt 404 if image.blank?
@@ -50,10 +51,9 @@ class Mugshot::Application < Sinatra::Base
   end
 
   private
-
   def process_operations(image, splat)
     operations = Hash[*splat.split('/')]
-    operations.assert_valid_keys('crop', 'resize') rescue halt 404
+    operations.assert_valid_keys("crop", "resize", "quality") rescue halt 404
     operations.each do |op, op_params|
       image.send("#{op}!", op_params)
     end
@@ -62,6 +62,6 @@ class Mugshot::Application < Sinatra::Base
   def send_image(image, format)
     content_type format
     response['Content-Disposition'] = 'inline'
-    image.to_blob
+    image.to_blob(:format => format)
   end
 end
