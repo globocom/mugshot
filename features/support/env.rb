@@ -22,8 +22,7 @@ After do
 end
 
 Rspec::Matchers.define :be_same_image_as do |expected_filename|
-  match do |actual_blob|
-    actual = Magick::Image.from_blob(actual_blob).first
+  match do |actual|
     expected = Magick::Image.read(File.expand_path(__FILE__ + "/../files/#{expected_filename}")).first
 
     actual.columns == expected.columns &&
@@ -33,8 +32,7 @@ Rspec::Matchers.define :be_same_image_as do |expected_filename|
 end
 
 Rspec::Matchers.define :have_compression_of do |compression|
-  match do |actual_blob|
-    actual = Magick::Image.from_blob(actual_blob).first
+  match do |actual|
     actual.quality.to_s == compression.to_s
   end
 

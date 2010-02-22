@@ -4,18 +4,23 @@ When /^I upload an image$/ do
   @image_id = last_response.body
 end
 
-When /^I ask for the (.*) resized image$/ do |size|
-  get "/resize/#{size}/#{@image_id}.jpg"
-  @retrieved_image = last_response.body
-end
-
 When /^I ask for a (.*) resized image that doesn't exist$/ do |size|
   get "/resize/#{size}/nonexistant.jpg"
 end
 
+When /^I ask for the (.*) resized image$/ do |size|
+  get "/resize/#{size}/#{@image_id}.jpg"
+  @retrieved_image = Magick::Image.from_blob(last_response.body).first
+end
+
 When /^I ask for the (.*) cropped image$/ do |size|
   get "/crop/#{size}/#{@image_id}.jpg"
-  @retrieved_image = last_response.body
+  @retrieved_image = Magick::Image.from_blob(last_response.body).first
+end
+
+When /^I ask for an image with (\d*)% of compression$/ do |compression|
+  get "/quality/#{compression}/#{@image_id}.jpg"
+  @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
 Then /^I should get a (\d+) response$/ do |response_code|
@@ -32,11 +37,6 @@ end
 
 Then /^I should get the (.*) cropped image$/ do |size|
   @retrieved_image.should be_same_image_as("test.crop.#{size}.jpg")
-end
-
-When /^I ask for an image with (\d*)% of compression$/ do |compression|
-  get "/quality/#{compression}/#{@image_id}.jpg"
-  @retrieved_image = last_response.body
 end
 
 Then /^I should get a image with (\d*)% of compression$/ do |compression|
