@@ -17,21 +17,6 @@ class Mugshot::Application < Sinatra::Base
     @storage.write(params['file'][:tempfile].read)
   end
 
-  ##
-  # @deprecated
-  get '/:size/:id.:format' do |size, id, format|
-    image = @storage.read(id)
-    halt 404 if image.blank?
-
-    image.resize!(size)
-
-    begin
-      send_image(image, format.to_sym)
-    ensure
-      image.destroy!
-    end
-  end
-
   get '/*/:id.:format' do |splat, id, format|
     image = @storage.read(id)
     halt 404 if image.blank?

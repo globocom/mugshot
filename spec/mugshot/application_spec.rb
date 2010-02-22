@@ -29,7 +29,7 @@ describe Mugshot::Application do
     end
   end
 
-  shared_examples_for 'any GET image' do
+  describe "GET /:ops/:ops_params/:id.:format" do
     before :each do
        @image = mock(Mugshot::Image, :null_object => true)
        @storage.stub!(:read).with("image_id").and_return(@image)
@@ -37,14 +37,13 @@ describe Mugshot::Application do
 
     it "should destroy image" do
       @image.should_receive(:destroy!)
-
-      perform_get
+      get "/crop/140x105/image_id.jpg"
     end
 
     it "should return image" do
       @image.stub!(:to_blob).and_return("image data")
 
-      perform_get
+      get "/crop/140x105/image_id.jpg"
 
       last_response.should be_ok
       last_response.body.should == "image data"
@@ -53,33 +52,11 @@ describe Mugshot::Application do
     it "should halt 404 when image doesn't exist" do
       @storage.stub!(:read).with("image_id").and_return(nil)
 
-      perform_get
+      get "/crop/140x105/image_id.jpg"
 
       last_response.should be_not_found
       last_response.body.should be_empty
     end
-  end
-
-  describe "GET /:size/:id.:format" do
-    def perform_get
-      get "/200x200/image_id.jpg"
-    end
-
-    it_should_behave_like 'any GET image'
-
-    it "should resize image" do
-      @image.should_receive(:resize!).with("200x200")
-
-      perform_get
-    end
-  end
-
-  describe "GET /:ops/:ops_params/:id.:format" do
-    def perform_get
-      get "/crop/140x105/image_id.jpg"
-    end
-
-    it_should_behave_like 'any GET image'
 
     it "should perform operations on image" do
       @image.should_receive(:resize!).with("140x140")
