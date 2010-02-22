@@ -1,4 +1,7 @@
 # -*- encoding: utf-8 -*-
+
+FORMATS = HashWithIndifferentAccess.new(:jpg => 'JPEG', :gif => 'GIF')
+
 When /^I upload an image$/ do
   post '/', "file" => Rack::Test::UploadedFile.new("features/support/files/test.jpg", "image/jpeg")
   @image_id = last_response.body
@@ -23,6 +26,11 @@ When /^I ask for an image with (\d*)% of compression$/ do |compression|
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
+When /^I ask for a (.*) image$/ do |format|
+  get "/resize/100x100/#{@image_id}.#{format}"
+  @retrieved_image = Magick::Image.from_blob(last_response.body).first
+end
+
 Then /^I should get a (\d+) response$/ do |response_code|
   last_response.status.should == response_code.to_i
 end
@@ -42,3 +50,8 @@ end
 Then /^I should get a image with (\d*)% of compression$/ do |compression|
   @retrieved_image.should have_compression_of(compression)
 end
+
+Then /^I should get a (.*) image$/ do |expected_format|
+  @retrieved_image.format.should == FORMATS[expected_format]
+end
+
