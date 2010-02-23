@@ -77,7 +77,18 @@ describe Mugshot::Application do
 
     it "should halt 404 on operations that are not allowed" do
       @image.should_not_receive(:operation!)
+
       get "/operation/140x105/image_id.jpg"
+
+      last_response.should be_not_found
+      last_response.body.should be_empty
+    end
+
+    it "should halt 404 on URL with invalid operation/param pair" do
+      get "/140x105/image_id.jpg"
+
+      last_response.should be_not_found
+      last_response.body.should be_empty
     end
   end
   

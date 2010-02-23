@@ -22,7 +22,7 @@ begin
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"
 
-      # gem.add_development_dependency "rspec", ">= 2.0.0.a8"
+      gem.add_development_dependency "rspec", ">= 2.0.0.a8"
       gem.add_development_dependency "cucumber", ">= 0.6.2"
       gem.add_development_dependency "rack-test", ">= 0.5.1"
 
@@ -51,8 +51,7 @@ begin
   desc "Run all examples using rcov"
   Rspec::Core::RakeTask.new :spec do |t|
     t.rcov = true
-    t.rcov_opts =  %[--output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
-    # t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
+    t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
   end
   task :spec => 'gem:check_dependencies'
   task :default => :spec
