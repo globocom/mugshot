@@ -4,9 +4,23 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 describe Mugshot::Application do
   before :each do
     @storage = mock(Mugshot::Storage)
+    @image = mock(Mugshot::Image, :null_object => true)
+    @storage.stub!(:read).with("image_id").and_return(@image)
+    @storage.stub!(:kind_of?).with(Mugshot::Storage).and_return(true)
     def app
       Mugshot::Application.new(@storage)
     end
+  end
+
+  describe "initialization" do
+    it "should accept default value for quality" do
+      def app
+        Mugshot::Application.new(:storage => @storage, :quality => 42)
+      end
+      @image.should_receive(:quality!).with("42")
+      get "/image_id.jpg"
+    end
+
   end
 
   describe "POST /" do
@@ -30,11 +44,6 @@ describe Mugshot::Application do
   end
 
   describe "GET /:ops/:ops_params/:id.:format" do
-    before :each do
-       @image = mock(Mugshot::Image, :null_object => true)
-       @storage.stub!(:read).with("image_id").and_return(@image)
-    end
-
     it "should destroy image" do
       @image.should_receive(:destroy!)
       get "/crop/140x105/image_id.jpg"
