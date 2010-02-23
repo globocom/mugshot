@@ -48,7 +48,7 @@ class Mugshot::Application < Sinatra::Base
     operations = []
     begin
       operations = Hash[*splat.split('/')]
-      operations.assert_valid_keys("crop", "resize", "quality") rescue halt 404
+      operations.assert_valid_keys("crop", "resize", "quality")
     rescue
       halt 404
     end

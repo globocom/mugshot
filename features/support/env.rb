@@ -3,7 +3,6 @@ require 'mugshot'
 
 require 'rack/test'
 require 'rspec/expectations'
-
 require 'pp'
 
 module CucumberWorld

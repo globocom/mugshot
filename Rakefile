@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-require 'rubygems'
-require 'rake'
+require "rubygems"
+require "rake"
 
 task :default => [:spec, :features]
 
@@ -17,7 +17,7 @@ begin
       gem.files = FileList["lib/**/*"] + %w{gems.yml gems_dev.yml}
       gem.test_files = FileList["spec/**/*"] + FileList["features/**/*"]
 
-      gem.add_dependency "activesupport", ">= 2.3.0"
+      gem.add_dependency "activesupport", "~> 2.3.5"
       gem.add_dependency "sinatra", ">= 0.9.4"
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"
@@ -51,8 +51,7 @@ begin
   desc "Run all examples using rcov"
   Rspec::Core::RakeTask.new :spec do |t|
     t.rcov = true
-    t.rcov_opts =  %[--output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
-    # t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*"]
+    t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*,.bundle"]
   end
   task :spec => 'gem:check_dependencies'
   task :default => :spec
@@ -70,4 +69,8 @@ rescue LoadError
   task :features do
     abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
   end
+end
+
+task :autotest do
+  system "watchr tests.watchr"
 end

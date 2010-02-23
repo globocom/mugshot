@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mugshot}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-02-04}
+  s.date = %q{2010-02-23}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -28,32 +28,34 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://mugshot.ws}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Dead simple image server}
   s.test_files = [
-    "spec/test.html",
-     "spec/mugshot",
-     "spec/mugshot/fs_storage_spec.rb",
-     "spec/mugshot/proxy_spec.rb",
-     "spec/mugshot/image_spec.rb",
-     "spec/mugshot/application_spec.rb",
-     "spec/spec_helper.rb",
-     "spec/files",
+    "spec/files",
      "spec/files/test.jpg",
+     "spec/mugshot",
+     "spec/mugshot/application_spec.rb",
+     "spec/mugshot/fs_storage_spec.rb",
+     "spec/mugshot/image_spec.rb",
+     "spec/mugshot/proxy_spec.rb",
      "spec/spec.opts",
-     "features/retrieve_resized_image.feature",
+     "spec/spec_helper.rb",
+     "spec/test.html",
      "features/crop_image.feature",
+     "features/image_format.feature",
+     "features/image_quality.feature",
+     "features/retrieve_resized_image.feature",
      "features/retrieve_resized_image_keeping_aspect_ratio.feature",
+     "features/step_definitions",
+     "features/step_definitions/all_steps.rb",
      "features/support",
      "features/support/env.rb",
      "features/support/files",
+     "features/support/files/test.200x.jpg",
      "features/support/files/test.200x200.jpg",
      "features/support/files/test.crop.300x200.jpg",
-     "features/support/files/test.x200.jpg",
      "features/support/files/test.jpg",
-     "features/support/files/test.200x.jpg",
-     "features/step_definitions",
-     "features/step_definitions/all_steps.rb"
+     "features/support/files/test.x200.jpg"
   ]
 
   if s.respond_to? :specification_version then
@@ -61,28 +63,28 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
+      s.add_runtime_dependency(%q<activesupport>, ["~> 2.3.5"])
       s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_runtime_dependency(%q<rmagick>, [">= 2.12.2"])
       s.add_runtime_dependency(%q<uuid>, [">= 2.0.2"])
-      s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.a8"])
       s.add_development_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5.1"])
     else
-      s.add_dependency(%q<activesupport>, [">= 0"])
+      s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
       s.add_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_dependency(%q<rmagick>, [">= 2.12.2"])
       s.add_dependency(%q<uuid>, [">= 2.0.2"])
-      s.add_dependency(%q<rspec>, [">= 1.3.0"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
       s.add_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_dependency(%q<rack-test>, [">= 0.5.1"])
     end
   else
-    s.add_dependency(%q<activesupport>, [">= 0"])
+    s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
     s.add_dependency(%q<sinatra>, [">= 0.9.4"])
     s.add_dependency(%q<rmagick>, [">= 2.12.2"])
     s.add_dependency(%q<uuid>, [">= 2.0.2"])
-    s.add_dependency(%q<rspec>, [">= 1.3.0"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
     s.add_dependency(%q<cucumber>, [">= 0.6.2"])
     s.add_dependency(%q<rack-test>, [">= 0.5.1"])
   end
