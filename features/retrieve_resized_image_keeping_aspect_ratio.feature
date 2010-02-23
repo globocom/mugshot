@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 Feature: Retrieve resized image keeping aspect ratio
 
   Scenario: Successful retrieval of resized image from given width

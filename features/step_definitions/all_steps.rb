@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 When /^I upload an image$/ do
   post '/', "file" => Rack::Test::UploadedFile.new("features/support/files/test.jpg", "image/jpeg")
   @image_id = last_response.body

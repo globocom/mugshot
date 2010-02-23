@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 def notify(kind, msg)
   title = kind == :pass ? "Yeah!" : "Fail!"
   

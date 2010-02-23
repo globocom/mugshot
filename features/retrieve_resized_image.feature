@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 Feature: Retrieve resized image
 
   Scenario: Successful retrieval of resized image

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 Feature: Crop image
 
   Scenario: Crop image with known aspect ratio

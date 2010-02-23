@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 source :gemcutter
 
 gem "activesupport", "~> 2.3.5", :require => "active_support"
