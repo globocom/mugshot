@@ -12,6 +12,7 @@ group :test do
 end
 
 group :tools do
+  gem "bundler", :require => nil
   gem "watchr", :require => nil
   gem "rev", :require => nil
   gem 'libnotify' if RUBY_PLATFORM =~ /linux/ # Linux

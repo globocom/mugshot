@@ -1,5 +1,5 @@
 def notify(kind, msg)
-  title = king == :pass ? "Yeah!" : "Fail!"
+  title = kind == :pass ? "Yeah!" : "Fail!"
   
   if RUBY_PLATFORM =~ /darwin/ # OSX
     system "growlnotify -m #{msg.inspect} -t #{title.inspect}"
@@ -16,6 +16,7 @@ def run(cmd, clear = false)
     notify(:pass, "Your getting good on it.")
   else
     notify(:fail, "Go to http://www.aiqueburro.com")
+  end
 end
 
 def run_test_file(file)
