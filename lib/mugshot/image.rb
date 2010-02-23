@@ -11,7 +11,6 @@ class Mugshot::Image
 
   def resize!(size)
     w, h = parse_size(size)
-
     if [w, h].include?(nil)
       @image.resize_to_fit! w, h
     else

@@ -13,27 +13,27 @@ def run(cmd, clear = false)
   system("clear") if clear
   pass = system(cmd)
   if pass
-    notify(:pass, "Your getting good on it.")
+    notify(:pass, "O Cirne agradece.")
   else
-    notify(:fail, "Go to http://www.aiqueburro.com")
+    notify(:fail, "http://www.aiqueburro.com")
   end
 end
 
-def run_test_file(file)
-  run %Q(bundle exec rspec #{file})
+def run_test_file(file, clear = false)
+  run "bundle exec rspec #{file}", clear
 end
 
 def run_all_tests
-  run "bundle exec rake"
+  run "bundle exec rake", :clear
 end
 
 def related_test_files(path)
-  Dir['spec/**/*.rb'].select{|file| file =~ /#{File.basename(path)}_spec/ }
+  Dir['spec/**/*.rb'].select{|file| file =~ /#{File.basename(path, ".rb")}_spec/ }
 end
 
-watch('spec/spec_helper\.rb'){ system('clear'); run_all_tests }
-watch('spec/.*/.*_spec\.rb'){|m| system('clear'); run_test_file(m[0]) }
-watch('lib/.*'){|m| related_test_files(m[0]).each{|file| run_test_file(file) }}
+watch('spec/spec_helper\.rb'){ run_all_tests }
+watch('spec/.*/.*_spec\.rb'){|m| run_test_file(m[0], :clear) }
+watch('lib/.*\.rb'){|m| puts m; related_test_files(m[0]).each{|file| run_test_file(file) }}
 
 # Ctrl-\
 Signal.trap('QUIT') do
