@@ -19,11 +19,15 @@ def run(cmd, clear = false)
   end
 end
 
+def run_feature(file, clear = false)
+  run "bundle exec cucumber #{file}", :clear
+end
+
 def run_test_file(file, clear = false)
   run "bundle exec rspec #{file}", clear
 end
 
-def run_all_tests
+def run_all
   run "bundle exec rake", :clear
 end
 
@@ -31,14 +35,22 @@ def related_test_files(path)
   Dir['spec/**/*.rb'].select{|file| file =~ /#{File.basename(path, ".rb")}_spec/ }
 end
 
-watch('spec/spec_helper\.rb'){ run_all_tests }
+# features
+watch('features/.*\.feature'){|m| run_feature(m[0], :clear) }
+watch('features/support/.*'){ run_all }
+watch('features/step_definitions/.*\.rb'){ run_all }
+
+# specs
+watch('spec/spec_helper\.rb'){ run_all }
 watch('spec/.*/.*_spec\.rb'){|m| run_test_file(m[0], :clear) }
+
+# lib
 watch('lib/.*\.rb'){|m| puts m; related_test_files(m[0]).each{|file| run_test_file(file) }}
 
 # Ctrl-\
 Signal.trap('QUIT') do
   puts " --- Running all tests ---\n\n"
-  run_all_tests
+  run_all
 end
 
 # Ctrl-C

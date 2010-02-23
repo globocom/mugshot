@@ -18,7 +18,7 @@ describe Mugshot::Application do
         Mugshot::Application.new(:storage => @storage, :quality => 42)
       end
       @image.should_receive(:quality!).with("42")
-      get "/image_id.jpg"
+      get "/image_id/any_name.jpg"
     end
 
   end
@@ -42,17 +42,17 @@ describe Mugshot::Application do
       last_response.body.should == "batata"
     end
   end
-
-  describe "GET /:ops/:ops_params/:id.:format" do
+  
+  describe "GET /:ops/:ops_params/:id/:name.:format" do
     it "should destroy image" do
       @image.should_receive(:destroy!)
-      get "/crop/140x105/image_id.jpg"
+      get "/image_id/any_name.jpg"
     end
 
     it "should return image" do
       @image.stub!(:to_blob).and_return("image data")
 
-      get "/crop/140x105/image_id.jpg"
+      get "/crop/140x105/image_id/any_name.jpg"
 
       last_response.should be_ok
       last_response.body.should == "image data"
@@ -61,7 +61,7 @@ describe Mugshot::Application do
     it "should halt 404 when image doesn't exist" do
       @storage.stub!(:read).with("image_id").and_return(nil)
 
-      get "/crop/140x105/image_id.jpg"
+      get "/crop/140x105/image_id/any_name.jpg"
 
       last_response.should be_not_found
       last_response.body.should be_empty
@@ -72,20 +72,20 @@ describe Mugshot::Application do
       @image.should_receive(:crop!).with("140x105")
       @image.should_receive(:quality!).with("70")
 
-      get "/resize/140x140/crop/140x105/quality/70/image_id.jpg"
+      get "/resize/140x140/crop/140x105/quality/70/image_id/any_name.jpg"
     end
 
     it "should halt 404 on operations that are not allowed" do
       @image.should_not_receive(:operation!)
 
-      get "/operation/140x105/image_id.jpg"
+      get "/operation/140x105/image_id/any_name.jpg"
 
       last_response.should be_not_found
       last_response.body.should be_empty
     end
-
+    
     it "should halt 404 on URL with invalid operation/param pair" do
-      get "/140x105/image_id.jpg"
+      get "/140x105/image_id/any_name.jpg"
 
       last_response.should be_not_found
       last_response.body.should be_empty

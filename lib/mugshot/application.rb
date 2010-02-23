@@ -17,7 +17,7 @@ class Mugshot::Application < Sinatra::Base
     @storage.write(params['file'][:tempfile].read)
   end
 
-  get '/*/?:id.:format' do |splat, id, format|
+  get '/*/?:id/:name.:format' do |splat, id, _, format|
     image = @storage.read(id)
     halt 404 if image.blank?
 
