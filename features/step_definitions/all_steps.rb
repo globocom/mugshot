@@ -28,6 +28,11 @@ When /^I ask for a (.*) image$/ do |format|
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
+When /^I ask for it with the name "(.*)"$/ do |name|
+  get "/#{@image_id}/#{name}.jpg"
+  @images_by_name[name] = Magick::Image.from_blob(last_response.body).first
+end
+
 Then /^I should get a (\d+) response$/ do |response_code|
   last_response.status.should == response_code.to_i
 end
@@ -52,12 +57,8 @@ Then /^I should get a (.*) image$/ do |expected_format|
   @retrieved_image.should be_same_image_as("test.#{expected_format}")
 end
 
-Then /^I should get the same image no matter what name I use to get it$/ do
-  get "/#{@image_id}/name_1.jpg"
-  @image_1 = Magick::Image.from_blob(last_response.body).first
-  
-  get "/#{@image_id}/name_2.jpg"
-  @image_2 = Magick::Image.from_blob(last_response.body).first
-  
-  @image_1.should be_same_image_as(@image_2)
+Then /^all of them should be the same$/ do
+  @images_by_name.values.each do |img|
+    img.should be_same_image_as("test.jpg")
+  end
 end

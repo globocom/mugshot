@@ -20,6 +20,10 @@ module CucumberWorld
 end
 World(CucumberWorld)
 
+Before do
+  @images_by_name = HashWithIndifferentAccess.new
+end
+
 After do
   require 'fileutils'
   FileUtils.rm_rf("/tmp/mugshot/cucumber")
