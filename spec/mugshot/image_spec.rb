@@ -13,8 +13,13 @@ describe Mugshot::Image do
     end
 
     Magick::Image.stub!(:read).and_return([@magick_image])
-
+    
     @image = Mugshot::Image.new(File.open("spec/files/test.jpg"))
+  end
+  
+  it 'can be initialized with blob' do
+    Magick::Image.should_receive(:from_blob).and_return([@magick_image])
+    Mugshot::Image.new("blob")
   end
 
   it 'should return image width and height' do

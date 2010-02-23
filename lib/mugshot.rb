@@ -6,5 +6,5 @@ module Mugshot
   autoload :Storage, "mugshot/storage"
   autoload :FSStorage, "mugshot/fs_storage"
   autoload :Application, "mugshot/application"
-  autoload :Proxy, "mugshot/proxy"
+  autoload :HTTPStorage, "mugshot/http_storage"
 end

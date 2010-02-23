@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 Feature: Image Format
 
   Scenario: Image as gif

@@ -38,3 +38,4 @@ Rspec::Matchers.define :be_same_image_as do |expected|
     actual.difference(expected)[1] < 0.01
   end
 end
+

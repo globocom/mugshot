@@ -10,6 +10,7 @@ group :test do
   gem "rspec", ">= 2.0.0.a8"
   gem "cucumber", ">= 0.6.2"
   gem "rack-test", ">= 0.5.1"
+  gem "fakeweb", ">= 1.2.8"
 end
 
 group :tools do

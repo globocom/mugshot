@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 Feature: Image Quality
 
   Scenario: Define the compression ratio

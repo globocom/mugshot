@@ -20,9 +20,8 @@ describe Mugshot::Application do
       @image.should_receive(:quality!).with("42")
       get "/image_id/any_name.jpg"
     end
-
   end
-
+  
   describe "POST /" do
     it "should create image" do
       file_read = nil

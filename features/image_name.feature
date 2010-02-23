@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 Feature: Image name
 
   Scenario: I can give any name for image url

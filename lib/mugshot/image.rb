@@ -46,8 +46,14 @@ class Mugshot::Image
   end
 
   protected
-  def initialize(file)
-    @image = Magick::Image.read(file).first
+  def initialize(file_or_blob)
+    if file_or_blob.is_a?(File)
+      @image = Magick::Image.read(file_or_blob).first
+    else
+      @image = Magick::Image.from_blob(file_or_blob).first
+    end
+    
+    # initialize attrs
     @quality = nil
   end
 
