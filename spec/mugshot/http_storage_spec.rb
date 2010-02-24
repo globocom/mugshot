@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require 'fakeweb'
 
@@ -7,7 +8,7 @@ describe Mugshot::HTTPStorage do
     @storage = Mugshot::HTTPStorage.new{|id| "http://foo.com:123/any/#{id}/abc.jpg"}
 
     FakeWeb.register_uri(:get, 'http://foo.com:123/any/image_id/abc.jpg', :body => "blob")
-    FakeWeb.register_uri(:get, 'http://foo.com:123/any/does_not_exists/abc.jpg', :status => 404)
+    FakeWeb.register_uri(:get, 'http://foo.com:123/any/does_not_exist/abc.jpg', :status => 404)
   end
 
   it "should read image from another mugshot" do
@@ -17,6 +18,6 @@ describe Mugshot::HTTPStorage do
   end
   
   it "should return nil if image does not exist in the other mugshot" do
-    @storage.read("does_not_exists").should be_nil
+    @storage.read("does_not_exist").should be_nil
   end
 end

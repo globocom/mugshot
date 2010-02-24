@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
+
 require 'fileutils'
+require 'net/http'
+
 class Mugshot::HTTPStorage < Mugshot::Storage
-
-  def write(bin)
-  end
-
   def read(id)
     url = URI.parse(@url_resolver.call(id))
     res = Net::HTTP.start(url.host, url.port) {|http| http.get(url.path)}
@@ -15,6 +14,7 @@ class Mugshot::HTTPStorage < Mugshot::Storage
   end
 
   protected
+
   def initialize(&block)
     @url_resolver = block
   end
