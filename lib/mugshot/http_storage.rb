@@ -2,7 +2,7 @@
 require 'fileutils'
 class Mugshot::HTTPStorage < Mugshot::Storage
 
-  def write(id)
+  def write(bin)
   end
 
   def read(id)
