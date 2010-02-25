@@ -71,22 +71,6 @@ Then /^I should get a (\d+) response$/ do |response_code|
   last_response.status.should == response_code.to_i
 end
 
-Then /^I should get the (.*) resized image$/ do |size|
-  @retrieved_image.should be_same_image_as("test.#{size}.jpg")
-end
-
-Then /^I should get the (.*) resized image keeping the aspect ratio$/ do |size|
-  @retrieved_image.should be_same_image_as("test.#{size}.jpg")
-end
-
-Then /^I should get the (.*) cropped image$/ do |size|
-  @retrieved_image.should be_same_image_as("test.crop.#{size}.jpg")
-end
-
-Then /^I should get a image with (\d*)% of compression$/ do |compression|
-  @retrieved_image.should be_same_image_as("test.quality.#{compression}.jpg")
-end
-
 Then /^I should get it with format (.*)$/ do |expected_format|
   @retrieved_image.should be_same_image_as("test.#{expected_format}")
 end
