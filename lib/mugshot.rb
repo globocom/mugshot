@@ -7,4 +7,5 @@ module Mugshot
   autoload :FSStorage, "mugshot/fs_storage"
   autoload :Application, "mugshot/application"
   autoload :HTTPStorage, "mugshot/http_storage"
+  autoload :MagickFactory, "mugshot/magick_factory"
 end

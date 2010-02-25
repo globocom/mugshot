@@ -3,8 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mugshot::Image do
   before :each do
-    @magick_image = mock(Magick::Image)
-    @magick_image.stub!(:strip!)
+    @magick_image = mock(Magick::Image, :null_object => true, :columns => 100, :rows => 100)
     @magick_image.instance_eval do # TODO: Explain it
       def to_blob(&block)
         block.call if block.present?
@@ -22,14 +21,6 @@ describe Mugshot::Image do
     Mugshot::Image.new("blob")
   end
 
-  it 'should return image width and height' do
-    @magick_image.stub!(:columns).and_return(100)
-    @magick_image.stub!(:rows).and_return(200)
-
-    @image.width.should == 100
-    @image.height.should == 200
-  end
-
   describe "to blob" do
     it 'should return image as a blob using default options' do
       @image.to_blob.should == 'blob_data'
@@ -45,6 +36,17 @@ describe Mugshot::Image do
     @image.should_receive(:quality=).with(75)
 
     @image.quality!("75")
+    @image.to_blob
+  end
+  
+  it 'should set background for transparent images' do
+    canvas = mock(Magick::Image)
+    Mugshot::MagickFactory.stub!(:create_canvas).and_return(canvas)
+    canvas.should_receive(:composite).
+      with(@magick_image, Magick::NorthWestGravity, Magick::OverCompositeOp).
+      and_return(@magick_image)
+
+    @image.background!("gray")
     @image.to_blob
   end
 
@@ -74,3 +76,4 @@ describe Mugshot::Image do
   end
 
 end
+

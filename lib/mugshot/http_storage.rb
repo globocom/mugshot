@@ -4,6 +4,7 @@ require 'fileutils'
 require 'net/http'
 
 class Mugshot::HTTPStorage < Mugshot::Storage
+  
   def read(id)
     url = URI.parse(@url_resolver.call(id))
     res = Net::HTTP.start(url.host, url.port) {|http| http.get(url.path)}

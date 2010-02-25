@@ -1,4 +1,22 @@
 # -*- encoding: utf-8 -*-
+Given /^a (.*) image (.*)$/ do |ext, name|
+  @image = {
+    :name => name,
+    :ext => ext,
+    :filename => "#{name.gsub(' ', '_')}.#{ext}"}
+
+  @image[:id] = write_image(@image[:filename])
+end
+
+When /^I ask for it with a (.*) background$/ do |color|
+  get "/background/#{color}/#{@image[:id]}/img.jpg"
+  @retrieved_image = Magick::Image.from_blob(last_response.body).first
+end
+
+Then /^I should get it (.*)$/ do |name|
+  @retrieved_image.should be_same_image_as("#{@image[:name].gsub(' ', '_')}-#{name.underscore.gsub(' ', '_')}.jpg")
+end
+
 When /^I upload an image$/ do
   post '/', "file" => Rack::Test::UploadedFile.new("features/support/files/test.jpg", "image/jpeg")
   @image_id = last_response.body

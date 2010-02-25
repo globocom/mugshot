@@ -2,6 +2,9 @@
 require 'sinatra/base'
 
 class Mugshot::Application < Sinatra::Base
+
+  VALID_OPERATIONS = %w[background crop resize quality]
+
   set :static, true
   set :public, ::File.expand_path(::File.join(::File.dirname(__FILE__), "public"))
 
@@ -36,11 +39,14 @@ class Mugshot::Application < Sinatra::Base
     opts.to_options!
 
     @storage = opts[:storage]
+
+    @background = opts[:background].to_s if opts.include?(:background)
     @quality = opts[:quality].to_s if opts.include?(:quality)
   end
 
   private
   def process_default_operations(image)
+    image.background!(@background) if !!@background
     image.quality!(@quality) if !!@quality
   end
   
@@ -48,7 +54,7 @@ class Mugshot::Application < Sinatra::Base
     operations = []
     begin
       operations = Hash[*splat.split('/')]
-      operations.assert_valid_keys("crop", "resize", "quality")
+      operations.assert_valid_keys(VALID_OPERATIONS)
     rescue
       halt 404
     end

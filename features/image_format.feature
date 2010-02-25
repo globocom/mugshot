@@ -9,3 +9,8 @@ Feature: Image Format
     When I upload an image
     And I ask for a jpg image
     Then I should get a jpg image
+
+  Scenario: Image as png
+    When I upload an image
+    And I ask for a png image
+    Then I should get a png image
