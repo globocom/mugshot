@@ -61,7 +61,7 @@ class Mugshot::Application < Sinatra::Base
 
   def process_operations(image, operations)
     operations.each do |op, op_params|
-      image.send("#{op}!", op_params)
+      image.send("#{op}!", op_params.to_s)
     end
   end
   

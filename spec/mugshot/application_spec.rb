@@ -18,7 +18,7 @@ describe Mugshot::Application do
         Mugshot::Application.new(:storage => @storage, :quality => 42)
       end
 
-      @image.should_receive(:quality!).with(42)
+      @image.should_receive(:quality!).with("42")
 
       get "/image_id/any_name.jpg"
     end
@@ -28,7 +28,7 @@ describe Mugshot::Application do
         Mugshot::Application.new(:storage => @storage, :background => :blue)
       end
 
-      @image.should_receive(:background!).with(:blue)
+      @image.should_receive(:background!).with("blue")
 
       get "/image_id/any_name.jpg"
     end
