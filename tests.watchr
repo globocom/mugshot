@@ -28,6 +28,10 @@ def run_test_file(file, clear = false)
   run "bundle exec rspec #{file}", clear
 end
 
+def run_all_features
+  run "bundle exec cucumber", :clear
+end
+
 def run_all
   run "bundle exec rake", :clear
 end
@@ -38,8 +42,8 @@ end
 
 # features
 watch('features/.*\.feature'){|m| run_feature(m[0], :clear) }
-watch('features/support/.*'){ run_all }
-watch('features/step_definitions/.*\.rb'){ run_all }
+watch('features/support/.*'){ run_all_features }
+watch('features/step_definitions/.*\.rb'){ run_all_features }
 
 # specs
 watch('spec/spec_helper\.rb'){ run_all }
@@ -56,4 +60,3 @@ end
 
 # Ctrl-C
 Signal.trap('INT') { abort("\n") }
-

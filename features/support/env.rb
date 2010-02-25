@@ -13,15 +13,18 @@ require 'RMagick'
 module CucumberWorld
   include Rspec::Matchers
   include Rack::Test::Methods
+  
+  mattr_accessor :storage
 
   def app
-    Mugshot::Application.new(Mugshot::FSStorage.new('/tmp/mugshot/cucumber'))
+    Mugshot::Application.new(storage)
   end
 end
 World(CucumberWorld)
 
 Before do
   @images_by_name = HashWithIndifferentAccess.new
+  CucumberWorld.storage = Mugshot::FSStorage.new('/tmp/mugshot/cucumber')
 end
 
 After do

@@ -26,7 +26,7 @@ describe Mugshot::Application do
     it "should create image" do
       file_read = nil
       File.open("spec/files/test.jpg") {|f| file_read = f.read}
-      @storage.should_receive(:write).with(file_read)
+      @storage.should_receive(:write).with(file_read).and_return("batata")
 
       post "/", "file" => Rack::Test::UploadedFile.new("spec/files/test.jpg", "image/jpeg")
 
@@ -39,6 +39,14 @@ describe Mugshot::Application do
       post "/", "file" => Rack::Test::UploadedFile.new("spec/files/test.jpg", "image/jpeg")
 
       last_response.body.should == "batata"
+    end
+
+    it "should halt 405 when storage doesn't allow writing to" do
+      @storage.stub!(:write).and_return(nil)
+
+      post "/", "file" => Rack::Test::UploadedFile.new("spec/files/test.jpg", "image/jpeg")
+
+      last_response.status.should == 405
     end
   end
   

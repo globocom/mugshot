@@ -14,7 +14,9 @@ class Mugshot::Application < Sinatra::Base
   end
 
   post '/?' do
-    @storage.write(params['file'][:tempfile].read)
+    id = @storage.write(params['file'][:tempfile].read)
+    halt 405 if id.blank?
+    id
   end
 
   get '/*/?:id/:name.:format' do |splat, id, _, format|

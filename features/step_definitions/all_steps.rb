@@ -1,7 +1,19 @@
 # -*- encoding: utf-8 -*-
+Given /^(a|an) (.*)Storage$/ do |_, storage_name|
+  case storage_name
+  when 'FS' then CucumberWorld.storage = Mugshot::FSStorage.new('/tmp/mugshot/cucumber')
+  when 'HTTP' then CucumberWorld.storage = Mugshot::HTTPStorage.new
+  end
+end
+
 When /^I upload an image$/ do
   post '/', "file" => Rack::Test::UploadedFile.new("features/support/files/test.jpg", "image/jpeg")
   @image_id = last_response.body
+end
+
+When /^I ask for it$/ do
+  get "/#{@image_id}/any_name.jpg"
+  @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
 When /^I ask for a (.*) resized image that doesn't exist$/ do |size|
@@ -31,6 +43,10 @@ end
 When /^I ask for it with the name "(.*)"$/ do |name|
   get "/#{@image_id}/#{name}.jpg"
   @images_by_name[name] = Magick::Image.from_blob(last_response.body).first
+end
+
+Then /^I should get it$/ do
+  @retrieved_image.should be_same_image_as("test.jpg")
 end
 
 Then /^I should get a (\d+) response$/ do |response_code|
