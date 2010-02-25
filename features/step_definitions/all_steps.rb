@@ -6,6 +6,10 @@ Given /^(a|an) (.*)Storage$/ do |_, storage_name|
   end
 end
 
+Given /^an image$/ do
+  Given "a jpg image test"
+end
+
 Given /^a (.*) image (.*)$/ do |ext, name|
   @image = {
     :name => name,
@@ -34,8 +38,8 @@ When /^I ask for the (.*) resized image$/ do |size|
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
-When /^I ask for the (.*) cropped image$/ do |size|
-  get "/crop/#{size}/#{@image_id}/any_name.jpg"
+When /^I ask for it cropped to (.*)$/ do |size|
+  get "/crop/#{size}/#{@image[:id]}/any_name.jpg"
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
