@@ -3,21 +3,23 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 describe Mugshot::Application do
   before :each do
-    @storage = mock(Mugshot::Storage)
+    @storage = mock(Mugshot::Storage, :null_object => true)
     @image = mock(Mugshot::Image, :null_object => true)
     @storage.stub!(:read).with("image_id").and_return(@image)
-    @storage.stub!(:kind_of?).with(Mugshot::Storage).and_return(true)
+
     def app
       Mugshot::Application.new(@storage)
     end
   end
 
-  describe "initialization" do
+  describe "default values" do
     it "should accept default value for quality" do
       def app
         Mugshot::Application.new(:storage => @storage, :quality => 42)
       end
+
       @image.should_receive(:quality!).with("42")
+
       get "/image_id/any_name.jpg"
     end
     
@@ -25,7 +27,9 @@ describe Mugshot::Application do
       def app
         Mugshot::Application.new(:storage => @storage, :background => 'blue')
       end
+
       @image.should_receive(:background!).with("blue")
+
       get "/image_id/any_name.jpg"
     end
   end
