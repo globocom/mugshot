@@ -3,8 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 describe Mugshot::Application do
   before :each do
-    @storage = mock(Mugshot::Storage, :null_object => true)
-    @image = mock(Mugshot::Image, :null_object => true)
+    @storage = stub(Mugshot::Storage, :null_object => true)
+    @image = stub(Mugshot::Image, :null_object => true)
     @storage.stub!(:read).with("image_id").and_return(@image)
 
     def app
@@ -63,9 +63,13 @@ describe Mugshot::Application do
   end
   
   describe "GET /:ops/:ops_params/:id/:name.:format" do
-    it "should destroy image" do
-      @image.should_receive(:destroy!)
-      get "/image_id/any_name.jpg"
+    it "should perform operations on image" do
+      @image.should_receive(:resize!).with("140x140")
+      @image.should_receive(:crop!).with("140x105")
+      @image.should_receive(:quality!).with("70")
+      @image.should_receive(:background!).with("red")
+
+      get "/background/red/resize/140x140/crop/140x105/quality/70/image_id/any_name.jpg"
     end
 
     it "should return image" do
@@ -77,6 +81,11 @@ describe Mugshot::Application do
       last_response.body.should == "image data"
     end
 
+    it "should destroy image" do
+      @image.should_receive(:destroy!)
+      get "/image_id/any_name.jpg"
+    end
+
     it "should halt 404 when image doesn't exist" do
       @storage.stub!(:read).with("image_id").and_return(nil)
 
@@ -84,15 +93,6 @@ describe Mugshot::Application do
 
       last_response.should be_not_found
       last_response.body.should be_empty
-    end
-
-    it "should perform operations on image" do
-      @image.should_receive(:resize!).with("140x140")
-      @image.should_receive(:crop!).with("140x105")
-      @image.should_receive(:quality!).with("70")
-      @image.should_receive(:background!).with("red")
-
-      get "/background/red/resize/140x140/crop/140x105/quality/70/image_id/any_name.jpg"
     end
 
     it "should halt 404 on operations that are not allowed" do
