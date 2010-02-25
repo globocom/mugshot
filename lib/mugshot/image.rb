@@ -1,12 +1,9 @@
 # -*- encoding: utf-8 -*-
 require 'RMagick'
 class Mugshot::Image
-  def width
-    @image.columns
-  end
 
-  def height
-    @image.rows
+  def background!(color)
+    @background_color = color
   end
 
   def resize!(size)
@@ -38,6 +35,9 @@ class Mugshot::Image
 
   def to_blob(opts = {})
     opts.merge!(:quality => @quality)
+
+    set_background(@background_color) if !!@background_color
+
     @image.strip!
     @image.to_blob do
       self.format = opts[:format].to_s if opts.include?(:format)
@@ -54,12 +54,18 @@ class Mugshot::Image
     end
     
     # initialize attrs
-    @quality = nil
+    @background_color = @quality = nil
   end
 
   private
-
   def parse_size(size)
     size.to_s.split("x").map{|i| i.blank? ? nil : i.to_i}
   end
+
+  def set_background(color)
+    @image = Mugshot::MagickFactory.
+      create_canvas(@image.columns, @image.rows, color).
+      composite(@image, Magick::NorthWestGravity, Magick::OverCompositeOp)
+  end
 end
+

@@ -19,6 +19,11 @@ module CucumberWorld
   def app
     Mugshot::Application.new(storage)
   end
+
+  def write_image(filename)
+    Mugshot::FSStorage.new('/tmp/mugshot/cucumber').
+      write(IO.read(File.expand_path(filename, "features/support/files/")))
+  end
 end
 World(CucumberWorld)
 

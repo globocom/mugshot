@@ -20,6 +20,14 @@ describe Mugshot::Application do
       @image.should_receive(:quality!).with("42")
       get "/image_id/any_name.jpg"
     end
+    
+    it "should accept default value for background" do
+      def app
+        Mugshot::Application.new(:storage => @storage, :background => 'blue')
+      end
+      @image.should_receive(:background!).with("blue")
+      get "/image_id/any_name.jpg"
+    end
   end
   
   describe "POST /" do
@@ -78,8 +86,9 @@ describe Mugshot::Application do
       @image.should_receive(:resize!).with("140x140")
       @image.should_receive(:crop!).with("140x105")
       @image.should_receive(:quality!).with("70")
+      @image.should_receive(:background!).with("red")
 
-      get "/resize/140x140/crop/140x105/quality/70/image_id/any_name.jpg"
+      get "/background/red/resize/140x140/crop/140x105/quality/70/image_id/any_name.jpg"
     end
 
     it "should halt 404 on operations that are not allowed" do
