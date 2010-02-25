@@ -14,3 +14,8 @@ Feature: Upload Image
     When I upload an image
 
     Then I should get a 405 response
+
+  Scenario: Image wasn't uploaded
+    When I ask for an image that doesn't exist
+
+    Then I should get a 404 response

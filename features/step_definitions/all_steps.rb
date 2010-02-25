@@ -29,12 +29,12 @@ When /^I ask for it$/ do
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
-When /^I ask for a (.*) resized image that doesn't exist$/ do |size|
-  get "/resize/#{size}/nonexistant_id/any_name.jpg"
+When /^I ask for an image that doesn't exist$/ do
+  get "/nonexistant_id/any_name.jpg"
 end
 
-When /^I ask for the (.*) resized image$/ do |size|
-  get "/resize/#{size}/#{@image_id}/any_name.jpg"
+When /^I ask for it resized to (.*)$/ do |size|
+  get "/resize/#{size}/#{@image[:id]}/any_name.jpg"
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
@@ -43,8 +43,8 @@ When /^I ask for it cropped to (.*)$/ do |size|
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
-When /^I ask for an image with (\d*)% of compression$/ do |compression|
-  get "/quality/#{compression}/#{@image_id}/any_name.jpg"
+When /^I ask for it with (\d*)% of compression$/ do |compression|
+  get "/quality/#{compression}/#{@image[:id]}/any_name.jpg"
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
