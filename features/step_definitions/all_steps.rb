@@ -54,7 +54,7 @@ When /^I ask for it with format (.*)$/ do |format|
 end
 
 When /^I ask for it with the name "(.*)"$/ do |name|
-  get "/#{@image_id}/#{name}.jpg"
+  get "/#{@image[:id]}/#{name}.jpg"
   @images_by_name[name] = Magick::Image.from_blob(last_response.body).first
 end
 
