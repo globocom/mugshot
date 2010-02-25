@@ -68,4 +68,3 @@ class Mugshot::Image
       composite(@image, Magick::NorthWestGravity, Magick::OverCompositeOp)
   end
 end
-
