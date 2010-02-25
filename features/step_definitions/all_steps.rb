@@ -48,8 +48,8 @@ When /^I ask for an image with (\d*)% of compression$/ do |compression|
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
-When /^I ask for a (.*) image$/ do |format|
-  get "/#{@image_id}/any_name.#{format}"
+When /^I ask for it with format (.*)$/ do |format|
+  get "/#{@image[:id]}/any_name.#{format}"
   @retrieved_image = Magick::Image.from_blob(last_response.body).first
 end
 
@@ -87,7 +87,7 @@ Then /^I should get a image with (\d*)% of compression$/ do |compression|
   @retrieved_image.should be_same_image_as("test.quality.#{compression}.jpg")
 end
 
-Then /^I should get a (.*) image$/ do |expected_format|
+Then /^I should get it with format (.*)$/ do |expected_format|
   @retrieved_image.should be_same_image_as("test.#{expected_format}")
 end
 
