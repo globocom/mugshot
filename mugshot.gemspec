@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-02-23}
+  s.date = %q{2010-02-26}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -20,42 +20,53 @@ Gem::Specification.new do |s|
     "lib/mugshot.rb",
      "lib/mugshot/application.rb",
      "lib/mugshot/fs_storage.rb",
+     "lib/mugshot/http_storage.rb",
      "lib/mugshot/image.rb",
-     "lib/mugshot/proxy.rb",
+     "lib/mugshot/magick_factory.rb",
      "lib/mugshot/public/crossdomain.xml",
      "lib/mugshot/storage.rb"
   ]
   s.homepage = %q{http://mugshot.ws}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{Dead simple image server}
   s.test_files = [
-    "spec/files",
-     "spec/files/test.jpg",
+    "spec/test.html",
      "spec/mugshot",
-     "spec/mugshot/application_spec.rb",
      "spec/mugshot/fs_storage_spec.rb",
+     "spec/mugshot/magick_factory_spec.rb",
      "spec/mugshot/image_spec.rb",
-     "spec/mugshot/proxy_spec.rb",
-     "spec/spec.opts",
+     "spec/mugshot/http_storage_spec.rb",
+     "spec/mugshot/application_spec.rb",
      "spec/spec_helper.rb",
-     "spec/test.html",
+     "spec/files",
+     "spec/files/firefox_png.png",
+     "spec/files/test_png.png",
+     "spec/files/test.jpg",
+     "spec/spec.opts",
+     "features/set_background.feature",
      "features/crop_image.feature",
-     "features/image_format.feature",
-     "features/image_quality.feature",
-     "features/retrieve_resized_image.feature",
-     "features/retrieve_resized_image_keeping_aspect_ratio.feature",
-     "features/step_definitions",
-     "features/step_definitions/all_steps.rb",
+     "features/resize_image.feature",
+     "features/define_image_quality.feature",
+     "features/convert_image_format.feature",
      "features/support",
      "features/support/env.rb",
      "features/support/files",
-     "features/support/files/test.200x.jpg",
-     "features/support/files/test.200x200.jpg",
-     "features/support/files/test.crop.300x200.jpg",
+     "features/support/files/test-resized_to_200x200.jpg",
+     "features/support/files/test.gif",
+     "features/support/files/test-resized_to_x200.jpg",
+     "features/support/files/with_alpha_channel-with_a_red_background.jpg",
+     "features/support/files/with_alpha_channel.png",
+     "features/support/files/test.png",
+     "features/support/files/test-with_75%_of_compression.jpg",
+     "features/support/files/test-cropped_to_300x200.jpg",
      "features/support/files/test.jpg",
-     "features/support/files/test.x200.jpg"
+     "features/support/files/test-resized_to_200x.jpg",
+     "features/upload_image.feature",
+     "features/step_definitions",
+     "features/step_definitions/all_steps.rb",
+     "features/retrieve_image_with_any_name.feature"
   ]
 
   if s.respond_to? :specification_version then
