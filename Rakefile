@@ -24,6 +24,7 @@ begin
       gem.add_dependency "blankslate", ">= 2.1.2.3"
 
       gem.add_development_dependency "rspec", ">= 2.0.0.a8"
+      gem.add_development_dependency "rcov", ">= 0.9.8"
       gem.add_development_dependency "cucumber", ">= 0.6.2"
       gem.add_development_dependency "rack-test", ">= 0.5.1"
 
