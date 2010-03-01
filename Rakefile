@@ -14,7 +14,7 @@ begin
       gem.email = %w{cainanunes@gmail.com fabriciolopesvital@gmail.com gcirne@gmail.com jose@peleteiro.net}
       gem.homepage = "http://mugshot.ws"
       gem.authors = ["Cainã Nunes", "Fabrício Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-      gem.files = FileList["lib/**/*"] + %w{gems.yml gems_dev.yml}
+      gem.files = FileList["lib/**/*"]
       gem.test_files = FileList["spec/**/*"] + FileList["features/**/*"]
 
       gem.add_dependency "activesupport", "~> 2.3.5"
