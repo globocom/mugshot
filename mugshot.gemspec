@@ -81,6 +81,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<uuid>, [">= 2.0.2"])
       s.add_runtime_dependency(%q<blankslate>, [">= 2.1.2.3"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0.a8"])
+      s.add_development_dependency(%q<rcov>, [">= 0.9.8"])
       s.add_development_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5.1"])
     else
@@ -90,6 +91,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<uuid>, [">= 2.0.2"])
       s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
       s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
+      s.add_dependency(%q<rcov>, [">= 0.9.8"])
       s.add_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_dependency(%q<rack-test>, [">= 0.5.1"])
     end
@@ -100,6 +102,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<uuid>, [">= 2.0.2"])
     s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
     s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
+    s.add_dependency(%q<rcov>, [">= 0.9.8"])
     s.add_dependency(%q<cucumber>, [">= 0.6.2"])
     s.add_dependency(%q<rack-test>, [">= 0.5.1"])
   end
