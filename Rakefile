@@ -53,7 +53,7 @@ begin
   desc "Run all examples using rcov"
   Rspec::Core::RakeTask.new :spec do |t|
     t.rcov = true
-    t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,/Library/Ruby/*,.bundle"]
+    t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,gems/*,/Library/Ruby/*,.bundle"]
   end
   task :spec => 'gem:check_dependencies'
   task :default => :spec
