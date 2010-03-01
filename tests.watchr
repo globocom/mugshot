@@ -13,10 +13,19 @@ end
 def run(cmd, clear = false)
   system("clear") if clear
   pass = system(cmd)
+
+  should_run_all = $was_failure && pass
+
   if pass
+    $was_failure = false
     notify(:pass, "O Cirne agradece.")
   else
+    $was_failure = true
     notify(:fail, "http://www.aiqueburro.com")
+  end
+
+  if should_run_all
+    run_all
   end
 end
 
@@ -28,8 +37,12 @@ def run_test_file(file, clear = false)
   run "bundle exec rspec #{file}", clear
 end
 
-def run_all
-  run "bundle exec rake", :clear
+def run_all_features(clear = false)
+  run "bundle exec cucumber", clear
+end
+
+def run_all(clear = false)
+  run "bundle exec rake", clear
 end
 
 def related_test_files(path)
@@ -38,15 +51,15 @@ end
 
 # features
 watch('features/.*\.feature'){|m| run_feature(m[0], :clear) }
-watch('features/support/.*'){ run_all }
-watch('features/step_definitions/.*\.rb'){ run_all }
+watch('features/support/.*'){ run_all_features(:clear) }
+watch('features/step_definitions/.*\.rb'){ run_all_features(:clear) }
 
 # specs
-watch('spec/spec_helper\.rb'){ run_all }
+watch('spec/spec_helper\.rb'){ run_all(:clear) }
 watch('spec/.*/.*_spec\.rb'){|m| run_test_file(m[0], :clear) }
 
 # lib
-watch('lib/.*\.rb'){|m| puts m; related_test_files(m[0]).each{|file| run_test_file(file) }}
+watch('lib/.*\.rb'){|m| puts m; related_test_files(m[0]).each{|file| run_test_file(file, :clear) }}
 
 # Ctrl-\
 Signal.trap('QUIT') do
@@ -56,4 +69,3 @@ end
 
 # Ctrl-C
 Signal.trap('INT') { abort("\n") }
-

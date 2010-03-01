@@ -17,7 +17,9 @@ class Mugshot::Application < Sinatra::Base
   end
 
   post '/?' do
-    @storage.write(params['file'][:tempfile].read)
+    id = @storage.write(params['file'][:tempfile].read)
+    halt 405 if id.blank?
+    id
   end
 
   get '/*/?:id/:name.:format' do |splat, id, _, format|
@@ -25,8 +27,8 @@ class Mugshot::Application < Sinatra::Base
     halt 404 if image.blank?
 
     begin
-      process_default_operations(image)
-      process_operations(image, splat)
+      process_operations(image, @default_operations)
+      process_operations(image, operations_from_splat(splat))
       send_image(image, format.to_sym)
     ensure
       image.destroy!
@@ -34,23 +36,19 @@ class Mugshot::Application < Sinatra::Base
   end
 
   protected
+
   def initialize(opts)
     opts = {:storage => opts} if opts.kind_of?(Mugshot::Storage)
     opts.to_options!
+    
+    @storage = opts.delete(:storage)
 
-    @storage = opts[:storage]
-
-    @background = opts[:background].to_s if opts.include?(:background)
-    @quality = opts[:quality].to_s if opts.include?(:quality)
+    @default_operations = opts
   end
 
   private
-  def process_default_operations(image)
-    image.background!(@background) if !!@background
-    image.quality!(@quality) if !!@quality
-  end
-  
-  def process_operations(image, splat)
+
+  def operations_from_splat(splat)
     operations = []
     begin
       operations = Hash[*splat.split('/')]
@@ -58,8 +56,12 @@ class Mugshot::Application < Sinatra::Base
     rescue
       halt 404
     end
+    operations
+  end
+
+  def process_operations(image, operations)
     operations.each do |op, op_params|
-      image.send("#{op}!", op_params)
+      image.send("#{op}!", op_params.to_s)
     end
   end
   
