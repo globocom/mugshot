@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-03-01}
+  s.date = %q{2010-02-23}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -20,9 +20,8 @@ Gem::Specification.new do |s|
     "lib/mugshot.rb",
      "lib/mugshot/application.rb",
      "lib/mugshot/fs_storage.rb",
-     "lib/mugshot/http_storage.rb",
      "lib/mugshot/image.rb",
-     "lib/mugshot/magick_factory.rb",
+     "lib/mugshot/proxy.rb",
      "lib/mugshot/public/crossdomain.xml",
      "lib/mugshot/storage.rb"
   ]
@@ -33,26 +32,20 @@ Gem::Specification.new do |s|
   s.summary = %q{Dead simple image server}
   s.test_files = [
     "spec/files",
-     "spec/files/firefox_png.png",
      "spec/files/test.jpg",
-     "spec/files/test_png.png",
      "spec/mugshot",
      "spec/mugshot/application_spec.rb",
      "spec/mugshot/fs_storage_spec.rb",
-     "spec/mugshot/http_storage_spec.rb",
      "spec/mugshot/image_spec.rb",
-     "spec/mugshot/magick_factory_spec.rb",
+     "spec/mugshot/proxy_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/support",
      "spec/test.html",
      "features/crop_image.feature",
      "features/image_format.feature",
-     "features/image_name.feature",
      "features/image_quality.feature",
      "features/retrieve_resized_image.feature",
      "features/retrieve_resized_image_keeping_aspect_ratio.feature",
-     "features/set_background.feature",
      "features/step_definitions",
      "features/step_definitions/all_steps.rb",
      "features/support",
@@ -61,13 +54,8 @@ Gem::Specification.new do |s|
      "features/support/files/test.200x.jpg",
      "features/support/files/test.200x200.jpg",
      "features/support/files/test.crop.300x200.jpg",
-     "features/support/files/test.gif",
      "features/support/files/test.jpg",
-     "features/support/files/test.png",
-     "features/support/files/test.quality.75.jpg",
-     "features/support/files/test.x200.jpg",
-     "features/support/files/with_alpha_channel-with_a_red_background.jpg",
-     "features/support/files/with_alpha_channel.png"
+     "features/support/files/test.x200.jpg"
   ]
 
   if s.respond_to? :specification_version then
@@ -79,7 +67,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_runtime_dependency(%q<rmagick>, [">= 2.12.2"])
       s.add_runtime_dependency(%q<uuid>, [">= 2.0.2"])
-      s.add_runtime_dependency(%q<blankslate>, [">= 2.1.2.3"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0.a8"])
       s.add_development_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5.1"])
@@ -88,7 +75,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_dependency(%q<rmagick>, [">= 2.12.2"])
       s.add_dependency(%q<uuid>, [">= 2.0.2"])
-      s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
       s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
       s.add_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_dependency(%q<rack-test>, [">= 0.5.1"])
@@ -98,7 +84,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<sinatra>, [">= 0.9.4"])
     s.add_dependency(%q<rmagick>, [">= 2.12.2"])
     s.add_dependency(%q<uuid>, [">= 2.0.2"])
-    s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
     s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
     s.add_dependency(%q<cucumber>, [">= 0.6.2"])
     s.add_dependency(%q<rack-test>, [">= 0.5.1"])
