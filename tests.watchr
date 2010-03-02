@@ -30,19 +30,19 @@ def run(cmd, clear = false)
 end
 
 def run_feature(file, clear = false)
-  run "bundle exec cucumber #{file}", :clear
+  run "cucumber #{file}", :clear
 end
 
 def run_test_file(file, clear = false)
-  run "bundle exec rspec #{file}", clear
+  run "rspec #{file}", clear
 end
 
 def run_all_features(clear = false)
-  run "bundle exec cucumber", clear
+  run "cucumber", clear
 end
 
 def run_all(clear = false)
-  run "bundle exec rake", clear
+  run "rake", clear
 end
 
 def related_test_files(path)

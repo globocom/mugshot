@@ -73,6 +73,7 @@ rescue LoadError
   end
 end
 
-task :autotest do
+desc 'Runs watchr'
+task :watchr do
   system "watchr tests.watchr"
 end
