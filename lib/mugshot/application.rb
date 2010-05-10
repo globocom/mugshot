@@ -44,6 +44,8 @@ class Mugshot::Application < Sinatra::Base
     @storage = opts.delete(:storage)
 
     @default_operations = opts
+    
+    super(opts)
   end
 
   private

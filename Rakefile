@@ -18,12 +18,13 @@ begin
       gem.test_files = FileList["spec/**/*"] + FileList["features/**/*"]
 
       gem.add_dependency "activesupport", "~> 2.3.5"
-      gem.add_dependency "sinatra", ">= 0.9.4"
+      gem.add_dependency "sinatra", ">= 1.0"
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"
       gem.add_dependency "blankslate", ">= 2.1.2.3"
 
-      gem.add_development_dependency "rspec", ">= 2.0.0.a8"
+      gem.add_development_dependency "fakeweb"
+      gem.add_development_dependency "rspec", ">= 2.0.0.beta.8"
       gem.add_development_dependency "rcov", ">= 0.9.8"
       gem.add_development_dependency "cucumber", ">= 0.6.2"
       gem.add_development_dependency "rack-test", ">= 0.5.1"
