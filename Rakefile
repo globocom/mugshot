@@ -18,7 +18,7 @@ begin
       gem.test_files = FileList["spec/**/*"] + FileList["features/**/*"]
 
       gem.add_dependency "activesupport", "~> 2.3.5"
-      gem.add_dependency "sinatra", ">= 1.0"
+      gem.add_dependency "sinatra", ">= 0.9.4"
       gem.add_dependency "rmagick", ">= 2.12.2"
       gem.add_dependency "uuid", ">= 2.0.2"
       gem.add_dependency "blankslate", ">= 2.1.2.3"
