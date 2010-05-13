@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mugshot}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro"]
-  s.date = %q{2010-03-01}
+  s.date = %q{2010-05-13}
   s.description = %q{Dead simple image server}
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net"]
   s.extra_rdoc_files = [
@@ -42,9 +42,7 @@ Gem::Specification.new do |s|
      "spec/mugshot/http_storage_spec.rb",
      "spec/mugshot/image_spec.rb",
      "spec/mugshot/magick_factory_spec.rb",
-     "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/support",
      "spec/test.html",
      "features/convert_image_format.feature",
      "features/crop_image.feature",
@@ -76,32 +74,35 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<activesupport>, ["~> 2.3.5"])
-      s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
+      s.add_runtime_dependency(%q<sinatra>, [">= 1.0"])
       s.add_runtime_dependency(%q<rmagick>, [">= 2.12.2"])
       s.add_runtime_dependency(%q<uuid>, [">= 2.0.2"])
       s.add_runtime_dependency(%q<blankslate>, [">= 2.1.2.3"])
-      s.add_development_dependency(%q<rspec>, [">= 2.0.0.a8"])
+      s.add_development_dependency(%q<fakeweb>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.8"])
       s.add_development_dependency(%q<rcov>, [">= 0.9.8"])
       s.add_development_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5.1"])
     else
       s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
-      s.add_dependency(%q<sinatra>, [">= 0.9.4"])
+      s.add_dependency(%q<sinatra>, [">= 1.0"])
       s.add_dependency(%q<rmagick>, [">= 2.12.2"])
       s.add_dependency(%q<uuid>, [">= 2.0.2"])
       s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
-      s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
+      s.add_dependency(%q<fakeweb>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.8"])
       s.add_dependency(%q<rcov>, [">= 0.9.8"])
       s.add_dependency(%q<cucumber>, [">= 0.6.2"])
       s.add_dependency(%q<rack-test>, [">= 0.5.1"])
     end
   else
     s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
-    s.add_dependency(%q<sinatra>, [">= 0.9.4"])
+    s.add_dependency(%q<sinatra>, [">= 1.0"])
     s.add_dependency(%q<rmagick>, [">= 2.12.2"])
     s.add_dependency(%q<uuid>, [">= 2.0.2"])
     s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
-    s.add_dependency(%q<rspec>, [">= 2.0.0.a8"])
+    s.add_dependency(%q<fakeweb>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.8"])
     s.add_dependency(%q<rcov>, [">= 0.9.8"])
     s.add_dependency(%q<cucumber>, [">= 0.6.2"])
     s.add_dependency(%q<rack-test>, [">= 0.5.1"])
