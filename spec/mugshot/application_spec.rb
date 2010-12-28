@@ -95,19 +95,19 @@ describe Mugshot::Application do
       last_response.body.should be_empty
     end
 
-    it "should halt 404 on operations that are not allowed" do
+    it "should halt 400 on operations that are not allowed" do
       @image.should_not_receive(:operation!)
 
       get "/operation/140x105/image_id/any_name.jpg"
 
-      last_response.should be_not_found
+      last_response.status.should == 400
       last_response.body.should be_empty
     end
     
-    it "should halt 404 on URL with invalid operation/param pair" do
+    it "should halt 400 on URL with invalid operation/param pair" do
       get "/140x105/image_id/any_name.jpg"
 
-      last_response.should be_not_found
+      last_response.status.should == 400
       last_response.body.should be_empty
     end
   end
@@ -137,6 +137,29 @@ describe Mugshot::Application do
 
         get "/"
         last_response.headers["Cache-Control"].should == "public, max-age=#{3.days.to_i}"
+      end
+    end
+    
+    describe "valid operations" do
+      it "should allow a valid operation" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :valid_operations => ["crop", "resize"])
+        end
+
+        @image.stub!(:to_blob).and_return("image data")
+        
+        get "/resize/200x100/image_id/any_name.jpg"
+        last_response.should be_ok
+        last_response.body.should == "image data"
+      end
+      
+      it "should halt with a 400 (Bad Request) when an invalid operation is given" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :valid_operations => ["crop", "resize"])
+        end
+
+        get "/quality/50/image_id/any_name.jpg"
+        last_response.status.should == 400
       end
     end
   end

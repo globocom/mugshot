@@ -3,7 +3,7 @@ require 'sinatra/base'
 
 class Mugshot::Application < Sinatra::Base
 
-  VALID_OPERATIONS = %w[background crop resize quality]
+  DEFAULT_VALID_OPERATIONS = %w[background crop resize quality]
 
   set :static, true
   set :public, ::File.expand_path(::File.join(::File.dirname(__FILE__), "public"))
@@ -43,6 +43,7 @@ class Mugshot::Application < Sinatra::Base
 
     @storage = opts.delete(:storage)
     @cache_duration = opts.delete(:cache_duration) || 1.year.to_i
+    @valid_operations = (opts.delete(:valid_operations) || DEFAULT_VALID_OPERATIONS).map(&:to_s)
 
     @default_operations = opts
     
@@ -55,9 +56,9 @@ class Mugshot::Application < Sinatra::Base
     operations = []
     begin
       operations = Hash[*splat.split('/')]
-      operations.assert_valid_keys(VALID_OPERATIONS)
+      operations.assert_valid_keys(@valid_operations)
     rescue
-      halt 404
+      halt 400
     end
     operations
   end
