@@ -2,7 +2,7 @@
 require 'fileutils'
 class Mugshot::FSStorage < Mugshot::Storage
   def write(bin)
-    returning asset_id do |id|
+    asset_id.tap do |id|
       File.open(File.join(@root_path, id), "w") do |fw|
         fw.write(bin)
       end

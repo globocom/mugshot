@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mugshot::Image do
   before :each do
-    @magick_image = mock(Magick::Image, :null_object => true, :columns => 100, :rows => 100)
+    @magick_image = mock(Magick::Image, :columns => 100, :rows => 100).as_null_object
     @magick_image.instance_eval do # TODO: Explain it
       def to_blob(&block)
         block.call if block.present?

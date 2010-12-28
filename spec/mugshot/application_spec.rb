@@ -3,8 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 describe Mugshot::Application do
   before :each do
-    @storage = stub(Mugshot::Storage, :null_object => true)
-    @image = stub(Mugshot::Image, :null_object => true)
+    @storage = stub(Mugshot::Storage).as_null_object
+    @image = stub(Mugshot::Image, :blank? => false).as_null_object
     @storage.stub!(:read).with("image_id").and_return(@image)
 
     def app

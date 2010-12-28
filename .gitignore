@@ -18,6 +18,8 @@ coverage
 rdoc
 pkg
 nbproject
+.bundle
+.rvmrc
 
 ## PROJECT::SPECIFIC
 .document

@@ -11,7 +11,7 @@ require 'pp'
 require 'RMagick'
 
 module CucumberWorld
-  include Rspec::Matchers
+  include RSpec::Matchers
   include Rack::Test::Methods
   
   mattr_accessor :storage
