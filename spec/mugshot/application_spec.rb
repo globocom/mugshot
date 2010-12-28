@@ -248,5 +248,38 @@ describe Mugshot::Application do
         end
       end
     end
+    
+    describe "allowed formats" do
+      it "should allow valid formats" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :allowed_formats => ["jpg", "png"])
+        end
+
+        @image.stub!(:to_blob).and_return("image data")
+        
+        ["jpg", "png"].each do |format|
+          get "/image_id/any_name.#{format}"
+          last_response.should be_ok
+          last_response.body.should == "image data"
+        end
+      end
+      
+      it "should allow any format when no allowed format is configured" do
+        @image.stub!(:to_blob).and_return("image data")
+        
+        get "/image_id/any_name.tiff"
+        last_response.should be_ok
+        last_response.body.should == "image data"
+      end
+      
+      it "should halt with a 400 (Bad Request) when an invalid format is given" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :allowed_formats => ["jpg", "png"])
+        end
+
+        get "image_id/any_name.tiff"
+        last_response.status.should == 400
+      end
+    end
   end
 end
