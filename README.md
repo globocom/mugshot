@@ -92,6 +92,29 @@ Supported operations
 </pre>
 
 
+Configuration
+-------------
+
+You can further configure your Mugshot::Application when creating it, like so:
+
+<pre>
+  # -*- encoding: utf-8 -*-
+  require "rubygems"
+  require "mugshot"
+
+  run Mugshot::Application.new(
+    :storage => Mugshot::FSStorage.new("/tmp/mugshot"),
+    :cache_duration => 7.days.to_i,                       # duration set in cache header (in seconds)
+    :allowed_sizes => ['640x360', '480x360', '320x240'],  # an array with valid sizes for resize and crop operations
+    :allowed_formats => [:jpg, :png],                     # an array with the allowed formats
+    :allowed_names => ['thumb', 'img'],                   # an array with the allowed names in the URL
+    :quality_range => 1..100,                             # the range of allowed values for quality operations
+    :valid_operations => [:crop, :resize, :quality]       # an array with the valid operations
+  )
+</pre>
+
+When using the restrictive configurations any value other than the ones allowed will result in a 400 status code being returned. If no restriction is set then any value can be given, which can lead to DOS attacks. Be careful!
+
 Development
 -----------
 
