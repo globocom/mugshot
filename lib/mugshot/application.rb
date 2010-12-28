@@ -50,6 +50,7 @@ class Mugshot::Application < Sinatra::Base
     @cache_duration = opts.delete(:cache_duration) || 1.year.to_i
     @valid_operations = (opts.delete(:valid_operations) || DEFAULT_VALID_OPERATIONS).map(&:to_s)
     @quality_range = opts.delete(:quality_range)
+    @allowed_sizes = opts.delete(:allowed_sizes)
 
     @default_operations = opts
     
@@ -70,11 +71,23 @@ class Mugshot::Application < Sinatra::Base
   end
   
   def check_operations
-    halt 400 unless valid_quality_operation?
+    halt 400 unless valid_quality_operation? && valid_resize_operation? && valid_crop_operation?
   end
   
   def valid_quality_operation?
     !@operations.has_key?("quality") || @quality_range.blank? || @quality_range.include?(@operations["quality"].to_i)
+  end
+  
+  def valid_resize_operation?
+    valid_operation?("resize", @allowed_sizes)
+  end
+  
+  def valid_crop_operation?
+    valid_operation?("crop", @allowed_sizes)
+  end
+  
+  def valid_operation?(operation, range_or_array)
+    !@operations.has_key?(operation) || range_or_array.blank? || range_or_array.include?(@operations[operation])
   end
 
   def process_operations(image, operations)

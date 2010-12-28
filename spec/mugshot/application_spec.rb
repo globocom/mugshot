@@ -200,5 +200,53 @@ describe Mugshot::Application do
         last_response.status.should == 400
       end
     end
+    
+    describe "allowed sizes" do
+      def allowed_sizes
+        ['640x480', '640x360', '480x360', '320x240']
+      end
+      
+      %w{resize crop}.each do |operation|
+        it "should allow #{operation} operations for configured values" do
+          def app
+            Mugshot::Application.new(:storage => @storage, :allowed_sizes => allowed_sizes)
+          end
+
+          @image.stub!(:to_blob).and_return("image data")
+        
+          allowed_sizes.each do |size|
+            get "/#{operation}/#{size}/image_id/any_name.jpg"
+            last_response.should be_ok
+            last_response.body.should == "image data"
+          end
+        end
+      
+        it "should allow #{operation} operations when allowed sizes is not configured" do
+          def app
+            Mugshot::Application.new(:storage => @storage)
+          end
+
+          @image.stub!(:to_blob).and_return("image data")
+        
+          ['300x200', '400x250'].each do |size|
+            get "/#{operation}/#{size}/image_id/any_name.jpg"
+            last_response.should be_ok
+            last_response.body.should == "image data"
+          end
+        end
+      
+        it "should halt with a 400 (Bad Request) #{operation} operations with a not allowed size" do
+          def app
+            Mugshot::Application.new(:storage => @storage, :allowed_sizes => allowed_sizes)
+          end
+
+          get "/#{operation}/300x200/image_id/any_name.jpg"
+          last_response.status.should == 400
+        
+          get "/#{operation}/480x300/image_id/any_name.jpg"
+          last_response.status.should == 400
+        end
+      end
+    end
   end
 end
