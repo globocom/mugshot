@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 describe Mugshot::Application do
   before :each do
-    @storage = stub(Mugshot::Storage).as_null_object
+    @storage = stub(Mugshot::Storage, :kind_of? => true).as_null_object
     @image = stub(Mugshot::Image, :blank? => false).as_null_object
     @storage.stub!(:read).with("image_id").and_return(@image)
 
@@ -125,6 +125,19 @@ describe Mugshot::Application do
     it "should cache response with max age of 1 day" do
       get "/"
       last_response.headers["Cache-Control"].should == "public, max-age=31557600"
+    end
+  end
+  
+  describe "configuration" do
+    describe "cache duration" do
+      it "should use the configured cache duration" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :cache_duration => 3.days.to_i)
+        end
+
+        get "/"
+        last_response.headers["Cache-Control"].should == "public, max-age=#{3.days.to_i}"
+      end
     end
   end
 end

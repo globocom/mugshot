@@ -9,7 +9,7 @@ class Mugshot::Application < Sinatra::Base
   set :public, ::File.expand_path(::File.join(::File.dirname(__FILE__), "public"))
 
   before do
-    response['Cache-Control'] = "public, max-age=#{1.year.to_i}"
+    response['Cache-Control'] = "public, max-age=#{@cache_duration}"
   end
 
   get '/?' do
@@ -40,8 +40,9 @@ class Mugshot::Application < Sinatra::Base
   def initialize(opts)
     opts = {:storage => opts} if opts.kind_of?(Mugshot::Storage)
     opts.to_options!
-    
+
     @storage = opts.delete(:storage)
+    @cache_duration = opts.delete(:cache_duration) || 1.year.to_i
 
     @default_operations = opts
     
