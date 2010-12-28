@@ -162,5 +162,43 @@ describe Mugshot::Application do
         last_response.status.should == 400
       end
     end
+    
+    describe "quality range" do
+      it "should allow quality operations with values in the configured range" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :quality_range => 1..200)
+        end
+
+        @image.stub!(:to_blob).and_return("image data")
+        
+        1.upto(200) do |quality|
+          get "/quality/#{quality}/image_id/any_name.jpg"
+          last_response.should be_ok
+          last_response.body.should == "image data"
+        end
+      end
+      
+      it "should allow quality operations when no range is configured" do
+        @image.stub!(:to_blob).and_return("image data")
+        
+        1.upto(300) do |quality|
+          get "/quality/#{quality}/image_id/any_name.jpg"
+          last_response.should be_ok
+          last_response.body.should == "image data"
+        end
+      end
+      
+      it "should halt with a 400 (Bad Request) quality operations with values outside the configured range" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :quality_range => 1..200)
+        end
+
+        get "/quality/0/image_id/any_name.jpg"
+        last_response.status.should == 400
+        
+        get "/quality/201/image_id/any_name.jpg"
+        last_response.status.should == 400
+      end
+    end
   end
 end

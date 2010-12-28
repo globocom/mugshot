@@ -11,7 +11,7 @@ class Mugshot::Application < Sinatra::Base
   before do
     response['Cache-Control'] = "public, max-age=#{@cache_duration}"
   end
-
+  
   get '/?' do
     'ok'
   end
@@ -22,13 +22,18 @@ class Mugshot::Application < Sinatra::Base
     id
   end
 
+  before '/*/?:id/:name.:format' do |splat, id, name, format|
+    @operations = operations_from_splat(splat)
+    check_operations
+  end
+  
   get '/*/?:id/:name.:format' do |splat, id, _, format|
     image = @storage.read(id)
     halt 404 if image.blank?
 
     begin
       process_operations(image, @default_operations)
-      process_operations(image, operations_from_splat(splat))
+      process_operations(image, @operations)
       send_image(image, format.to_sym)
     ensure
       image.destroy!
@@ -44,6 +49,7 @@ class Mugshot::Application < Sinatra::Base
     @storage = opts.delete(:storage)
     @cache_duration = opts.delete(:cache_duration) || 1.year.to_i
     @valid_operations = (opts.delete(:valid_operations) || DEFAULT_VALID_OPERATIONS).map(&:to_s)
+    @quality_range = opts.delete(:quality_range)
 
     @default_operations = opts
     
@@ -61,6 +67,14 @@ class Mugshot::Application < Sinatra::Base
       halt 400
     end
     operations
+  end
+  
+  def check_operations
+    halt 400 unless valid_quality_operation?
+  end
+  
+  def valid_quality_operation?
+    !@operations.has_key?("quality") || @quality_range.blank? || @quality_range.include?(@operations["quality"].to_i)
   end
 
   def process_operations(image, operations)
