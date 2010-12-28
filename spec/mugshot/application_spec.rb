@@ -281,5 +281,38 @@ describe Mugshot::Application do
         last_response.status.should == 400
       end
     end
+    
+    describe "allowed names" do
+      it "should allow valid names" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :allowed_names => ["some_name", "some_other_name"])
+        end
+
+        @image.stub!(:to_blob).and_return("image data")
+        
+        ["some_name", "some_other_name"].each do |name|
+          get "/image_id/#{name}.jpg"
+          last_response.should be_ok
+          last_response.body.should == "image data"
+        end
+      end
+      
+      it "should allow any name when no allowed name is configured" do
+        @image.stub!(:to_blob).and_return("image data")
+        
+        get "/image_id/any_name.tiff"
+        last_response.should be_ok
+        last_response.body.should == "image data"
+      end
+      
+      it "should halt with a 400 (Bad Request) when an invalid name is given" do
+        def app
+          Mugshot::Application.new(:storage => @storage, :allowed_names => ["some_name", "some_other_name"])
+        end
+
+        get "image_id/any_name.tiff"
+        last_response.status.should == 400
+      end
+    end
   end
 end

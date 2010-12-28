@@ -24,8 +24,9 @@ class Mugshot::Application < Sinatra::Base
 
   before '/*/?:id/:name.:format' do |splat, id, name, format|
     @operations = operations_from_splat(splat)
-    check_operations
     check_format(format)
+    check_name(name)
+    check_operations
   end
   
   get '/*/?:id/:name.:format' do |splat, id, _, format|
@@ -53,6 +54,7 @@ class Mugshot::Application < Sinatra::Base
     @quality_range = opts.delete(:quality_range)
     @allowed_sizes = opts.delete(:allowed_sizes)
     @allowed_formats = opts.delete(:allowed_formats)
+    @allowed_names = opts.delete(:allowed_names)
 
     @default_operations = opts
     
@@ -80,6 +82,14 @@ class Mugshot::Application < Sinatra::Base
     @allowed_formats.blank? || @allowed_formats.map(&:to_s).include?(format)
   end
   
+  def check_name(name)
+    halt 400 unless valid_name?(name)
+  end
+  
+  def valid_name?(name)
+    @allowed_names.blank? || @allowed_names.map(&:to_s).include?(name)
+  end
+
   def check_operations
     halt 400 unless valid_quality_operation? && valid_resize_operation? && valid_crop_operation?
   end
