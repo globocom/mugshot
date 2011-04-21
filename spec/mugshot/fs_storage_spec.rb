@@ -18,8 +18,8 @@ describe Mugshot::FSStorage do
     Mugshot::Image.stub!(:new).and_return(image)
 
     id = @fs.write(bin)
+    
     image2 = @fs.read(id)
-
     image2.should == image
   end
 

@@ -5,8 +5,8 @@ require "mugshot/version"
 Gem::Specification.new do |s|
   s.name        = "mugshot"
   s.version     = Mugshot::VERSION
-  s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro", "Vicente Mundim"]
-  s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net", "vicente.mundim@gmail.com"]
+  s.authors = ["Cain\303\243 Nunes", "Fabr\303\255cio Lopes", "Guilherme Cirne", "Jose Peleteiro", "Vicente Mundim", "Anselmo Alves"]
+  s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net", "vicente.mundim@gmail.com", "me@anselmoalves.com"]
   s.homepage = %q{http://mugshot.ws}
   s.summary = %q{Dead simple image server}
   s.description = %q{The basic idea of Mugshot is that you upload the largest/highest quality images possible. When retrieving the images you apply different operations to it such as: resizing, rounded corners, transparency and anything else we can think of!}

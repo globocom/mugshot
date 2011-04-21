@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mugshot (0.5.0)
+    mugshot (0.5.1)
       activesupport (~> 2.3.5)
       blankslate (>= 2.1.2.3)
       rmagick (>= 2.12.2)
@@ -11,8 +11,8 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (2.3.10)
-    blankslate (2.1.2.3)
+    activesupport (2.3.11)
+    blankslate (2.1.2.4)
     builder (3.0.0)
     cucumber (0.10.0)
       builder (>= 2.1.2)
@@ -39,12 +39,12 @@ GEM
     rspec-expectations (2.3.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.3.0)
-    sinatra (1.1.2)
+    sinatra (1.2.3)
       rack (~> 1.1)
-      tilt (~> 1.2)
+      tilt (>= 1.2.2, < 2.0)
     term-ansicolor (1.0.5)
-    tilt (1.2.1)
-    uuid (2.3.1)
+    tilt (1.2.2)
+    uuid (2.3.2)
       macaddr (~> 1.0)
 
 PLATFORMS
