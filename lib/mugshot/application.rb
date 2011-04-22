@@ -11,7 +11,7 @@ class Mugshot::Application < Sinatra::Base
   before do
     response['Cache-Control'] = "public, max-age=#{@cache_duration}"
   end
-  
+
   get '/?' do
     'ok'
   end
@@ -28,7 +28,7 @@ class Mugshot::Application < Sinatra::Base
     check_name(name)
     check_operations
   end
-  
+
   get '/*/?:id/:name.:format' do |splat, id, _, format|
     image = @storage.read(id)
     halt 404 if image.blank?
@@ -42,7 +42,7 @@ class Mugshot::Application < Sinatra::Base
     end
   end
 
-  protected
+protected
 
   def initialize(opts)
     opts = {:storage => opts} if opts.kind_of?(Mugshot::Storage)
@@ -57,11 +57,11 @@ class Mugshot::Application < Sinatra::Base
     @allowed_names = opts.delete(:allowed_names)
 
     @default_operations = opts
-    
+
     super(opts)
   end
 
-  private
+private
 
   def operations_from_splat(splat)
     operations = []
@@ -73,19 +73,19 @@ class Mugshot::Application < Sinatra::Base
     end
     operations
   end
-  
+
   def check_format(format)
     halt 400 unless valid_format?(format)
   end
-  
+
   def valid_format?(format)
     @allowed_formats.blank? || @allowed_formats.map(&:to_s).include?(format)
   end
-  
+
   def check_name(name)
     halt 400 unless valid_name?(name)
   end
-  
+
   def valid_name?(name)
     @allowed_names.blank? || @allowed_names.map(&:to_s).include?(name)
   end
@@ -93,19 +93,19 @@ class Mugshot::Application < Sinatra::Base
   def check_operations
     halt 400 unless valid_quality_operation? && valid_resize_operation? && valid_crop_operation?
   end
-  
+
   def valid_quality_operation?
     !@operations.has_key?("quality") || @quality_range.blank? || @quality_range.include?(@operations["quality"].to_i)
   end
-  
+
   def valid_resize_operation?
     valid_operation?("resize", @allowed_sizes)
   end
-  
+
   def valid_crop_operation?
     valid_operation?("crop", @allowed_sizes)
   end
-  
+
   def valid_operation?(operation, range_or_array)
     !@operations.has_key?(operation) || range_or_array.blank? || range_or_array.include?(@operations[operation])
   end
@@ -115,7 +115,7 @@ class Mugshot::Application < Sinatra::Base
       image.send("#{op}!", op_params.to_s)
     end
   end
-  
+
   def send_image(image, format)
     content_type format
     response['Content-Disposition'] = 'inline'

@@ -1,8 +1,15 @@
 # -*- encoding: utf-8 -*-
 require 'uuid'
 class Mugshot::Storage
-  protected
+
+  def write(bin)
+    nil
+  end
+
+protected
+
   def asset_id
     UUID.generate :compact
   end
+
 end

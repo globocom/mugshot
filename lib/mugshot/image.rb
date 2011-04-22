@@ -45,19 +45,21 @@ class Mugshot::Image
     end
   end
 
-  protected
+protected
+
   def initialize(file_or_blob)
     if file_or_blob.is_a?(File)
       @image = Magick::Image.read(file_or_blob).first
     else
       @image = Magick::Image.from_blob(file_or_blob).first
     end
-    
+
     # initialize attrs
     @background_color = @quality = nil
   end
 
-  private
+private
+
   def parse_size(size)
     size.to_s.split("x").map{|i| i.blank? ? nil : i.to_i}
   end
@@ -67,4 +69,5 @@ class Mugshot::Image
       create_canvas(@image.columns, @image.rows, color).
       composite(@image, Magick::NorthWestGravity, Magick::OverCompositeOp)
   end
+
 end
