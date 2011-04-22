@@ -10,10 +10,7 @@ Bundler::GemHelper.install_tasks
 begin
   require 'rspec/core/rake_task'
   desc "Run all examples using rcov"
-  RSpec::Core::RakeTask.new :spec do |t|
-    t.rcov = true
-    t.rcov_opts =  %[--failure-threshold 100 --output doc/coverage -Ilib -Ispec --exclude "spec,gems/*,/Library/Ruby/*,.bundle"]
-  end
+  RSpec::Core::RakeTask.new :spec
   task :default => :spec
 rescue LoadError
   task :spec do
