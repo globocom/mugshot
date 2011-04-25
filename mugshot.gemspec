@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
+  s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
   s.add_dependency(%q<i18n>, [">= 0.5.0"])
   s.add_dependency(%q<rmagick>, [">= 2.12.2"])
   s.add_dependency(%q<uuid>, [">= 2.0.2"])

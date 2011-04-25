@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     mugshot (0.6.2)
-      activesupport (~> 3.0.0)
+      activesupport (~> 2.3.5)
       blankslate (>= 2.1.2.3)
       i18n (>= 0.5.0)
       rmagick (>= 2.12.2)
@@ -12,7 +12,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.0.7)
+    activesupport (2.3.11)
     blankslate (2.1.2.4)
     builder (3.0.0)
     cucumber (0.10.2)
