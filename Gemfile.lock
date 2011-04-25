@@ -6,7 +6,7 @@ PATH
       blankslate (>= 2.1.2.3)
       i18n (>= 0.5.0)
       rmagick (>= 2.12.2)
-      sinatra (>= 1.2.0)
+      sinatra (>= 0.9.4)
       uuid (>= 2.0.2)
 
 GEM
