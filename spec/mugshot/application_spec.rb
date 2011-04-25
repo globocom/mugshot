@@ -37,10 +37,9 @@ describe Mugshot::Application do
   describe "POST /" do
     it "should create image" do
       file_read = nil
-      File.open("spec/files/test.jpg") {|f| file_read = f.read}
+      File.open("spec/files/test-upload.jpg") {|f| file_read = f.read}
       @storage.should_receive(:write).with(file_read).and_return("batata")
-
-      post "/", "file" => Rack::Test::UploadedFile.new("spec/files/test.jpg", "image/jpeg")
+      post "/", "file" => Rack::Test::UploadedFile.new("spec/files/test-upload.jpg", "image/jpeg")
 
       last_response.status.should == 200
     end

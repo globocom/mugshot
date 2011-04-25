@@ -1,12 +1,8 @@
 # -*- encoding: utf-8 -*-
-
 require 'fileutils'
 require 'net/http'
 
 class Mugshot::HTTPStorage < Mugshot::Storage
-  def write(bin)
-    nil
-  end
 
   def read(id)
     url = URI.parse(@url_resolver.call(id))
@@ -17,9 +13,10 @@ class Mugshot::HTTPStorage < Mugshot::Storage
     Mugshot::Image.new(res.body)
   end
 
-  protected
+protected
 
   def initialize(&block)
     @url_resolver = block
   end
+
 end
