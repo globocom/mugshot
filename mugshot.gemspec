@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://mugshot.ws}
   s.summary = %q{Dead simple image server}
   s.description = %q{The basic idea of Mugshot is that you upload the largest/highest quality images possible. When retrieving the images you apply different operations to it such as: resizing, rounded corners, transparency and anything else we can think of!}
-  s.date = %q{2010-12-28}
+  s.date = %q{2011-04-25}
 
   s.rubyforge_project = "mugshot"
 
