@@ -8,7 +8,7 @@ describe Mugshot::FSStorage do
 
   after :each do
     require 'fileutils'
-    FileUtils.rm_rf("/tmp/mugshot/spec")
+    #FileUtils.rm_rf("/tmp/mugshot/spec")
   end
 
   it "should write an image to the filesystem and read it back" do
@@ -18,12 +18,16 @@ describe Mugshot::FSStorage do
     Mugshot::Image.stub!(:new).and_return(image)
 
     id = @fs.write(bin)
-    
+
     image2 = @fs.read(id)
     image2.should == image
   end
 
   it "should return nil when an image with the given id doesn't exist on the filesystem" do
     @fs.read('nonexistant-id').should be_nil
+  end
+
+  it "should convert an id to path with 4r levels of directories" do
+    @fs.send(:id_to_path, "a9657a30c7df012c736512313b021ce1").should == "a96/57a/30c/7df/012c736512313b021ce1"
   end
 end
