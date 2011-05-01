@@ -8,10 +8,6 @@ class Mugshot::Application < Sinatra::Base
   set :static, true
   set :public, ::File.expand_path(::File.join(::File.dirname(__FILE__), "public"))
 
-  before do
-    response['Cache-Control'] = "public, max-age=#{@cache_duration}"
-  end
-
   get '/?' do
     'ok'
   end
@@ -31,11 +27,16 @@ class Mugshot::Application < Sinatra::Base
 
   get '/*/?:id/:name.:format' do |splat, id, _, format|
     image = @storage.read(id)
-    halt 404 if image.blank?
+
+    if image.blank?
+      response['Cache-Control'] = "public, max-age=#{1.minute}"
+      halt 404
+    end
 
     begin
       process_operations(image, @default_operations)
       process_operations(image, @operations)
+      response['Cache-Control'] = "public, max-age=#{@cache_duration}"
       send_image(image, format.to_sym)
     ensure
       image.destroy!
