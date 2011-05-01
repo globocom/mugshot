@@ -21,12 +21,13 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_dependency(%q<activesupport>, ["~> 2.3.5"])
+  s.add_dependency(%q<activesupport>, [">= 2.3.5"])
   s.add_dependency(%q<i18n>, [">= 0.5.0"])
   s.add_dependency(%q<rmagick>, [">= 2.12.2"])
   s.add_dependency(%q<uuid>, [">= 2.0.2"])
   s.add_dependency(%q<blankslate>, [">= 2.1.2.3"])
   s.add_dependency(%q<sinatra>, [">= 0.9.4"])
+  s.add_dependency(%q<fog>, [">= 0.7.2"])
 
   s.add_development_dependency(%q<fakeweb>, [">= 0"])
   s.add_development_dependency(%q<rspec>, [">= 2.3.0"])

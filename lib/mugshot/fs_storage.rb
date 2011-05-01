@@ -18,7 +18,7 @@ class Mugshot::FSStorage < Mugshot::Storage
     Mugshot::Image.new File.open(file)
   end
 
-  protected
+protected
 
   def initialize(root_path)
     @root_path = root_path
