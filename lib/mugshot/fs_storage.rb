@@ -25,12 +25,5 @@ protected
     FileUtils.mkdir_p(root_path)
   end
 
-  def id_to_path(id)
-    path = id.to_s.clone
-    4.times do |i|
-      path = path.insert(3 + (i * 3) + i, '/')
-    end
-    path
-  end
 end
 

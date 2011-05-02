@@ -1,18 +1,19 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'fog'
 
-describe Mugshot::FSStorage do
+describe Mugshot::S3Storage do
   before :each do
-    @fs = Mugshot::FSStorage.new("/tmp/mugshot/spec")
+    Fog.mock!
+    @fs = Mugshot::S3Storage.new(:bucket_name => 'bucket_name', :access_key_id => 'access_key_id', :secret_access_key => 'secret_access_key')
+    @bin = File.open("spec/files/test.jpg").read
   end
 
   it "should write an image to the filesystem and read it back" do
-    bin = File.open("spec/files/test.jpg").read
-
-    image = Mugshot::Image.new File.open("spec/files/test.jpg")
+    image = Mugshot::Image.new(File.open("spec/files/test.jpg"))
     Mugshot::Image.stub!(:new).and_return(image)
 
-    id = @fs.write(bin)
+    id = @fs.write(@bin)
 
     image2 = @fs.read(id)
     image2.should == image
