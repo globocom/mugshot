@@ -14,7 +14,7 @@ protected
 
   def id_to_path(id)
     path = id.to_s.clone
-    6.times do |i|
+    14.times do |i|
       path = path.insert(2 + (i * 2) + i, '/')
     end
     path
