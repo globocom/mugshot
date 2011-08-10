@@ -5,7 +5,7 @@ require "mugshot/version"
 Gem::Specification.new do |s|
   s.name        = "mugshot"
   s.version     = Mugshot::VERSION
-  s.authors = ["Cainã Nunes", "Fabrício Lopes", "Guilherme Cirne", "Jose Peleteiro", "Vicente Mundim", "Anselmo Alves"]
+  s.authors = ["Caina Nunes", "Fabricio Lopes", "Guilherme Cirne", "Jose Peleteiro", "Vicente Mundim", "Anselmo Alves"]
   s.email = ["cainanunes@gmail.com", "fabriciolopesvital@gmail.com", "gcirne@gmail.com", "jose@peleteiro.net", "vicente.mundim@gmail.com", "me@anselmoalves.com"]
   s.homepage = %q{http://mugshot.ws}
   s.summary = %q{Dead simple image server}
