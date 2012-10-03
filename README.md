@@ -1,3 +1,9 @@
+Deprecated
+==========
+
+**Mugshot has been deprecated and is no longer maintained**.
+
+
 Mugshot
 =======
 
